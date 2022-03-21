@@ -6,7 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useLoadedAssets } from "./hooks/useLoadedAssets";
 import Navigation from "./navigation";
 import { useColorScheme, View } from "react-native";
-import {ButtonApp,SecondButtonApp} from "./components/Button/Button_app";
+import Button from "./components/Button/Button_app";
 import { Divider } from "react-native-paper";
 
 export default function App() {
@@ -19,9 +19,13 @@ export default function App() {
     return (
       <SafeAreaProvider style={{alignItems:'center',justifyContent: 'center',}}>
         {/* <Navigation colorScheme={colorScheme} /> */}
-        <ButtonApp onClick={()=> console.log('Piu')}>Teste</ButtonApp>
+        <Button  onClick={()=> console.log('Botão 1')}>Teste</Button>
         <Divider style={{height:15}}></Divider>
-        <SecondButtonApp>Second Button</SecondButtonApp>
+        <Button style_button="second_color_app" onClick={()=> console.log('Botão 2')}>Teste</Button>
+        <Divider style={{height:15}}></Divider>
+        <Button style_button="mission_main_color_app" onClick={()=> console.log('Botão 3')}>Teste</Button>
+        <Divider style={{height:15}}></Divider>
+        <Button style_button="mission_second_color_app" onClick={()=> console.log('Botão 4')}>x2</Button>
         
         <StatusBar />
       </SafeAreaProvider>

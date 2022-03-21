@@ -1,56 +1,47 @@
 import { Text, View } from "../Themed";
-import {  TouchableOpacity, StyleSheet } from "react-native";
-import {main_orange_color_app} from "../../constants/Colors_app"
+import { Button as ButtonApp } from 'react-native-paper';
 
-export function ButtonApp(props){
+import styles from "./styles_button_app.js"
+
+export default function Button(props){
+
+    const ButtonStyles = {
+        "main_color_app": {
+            "text": styles.text_button,
+            "button": styles.size_button
+        },
+        "second_color_app": {
+            "text": styles.textSecondText,
+            "button": styles.sizeSecondButton
+        },
+        "mission_main_color_app": {
+            "text": styles.missionMainText,
+            "button": styles.missionMainButton
+        },
+        "mission_second_color_app": {
+            "text": styles.missionSecondText,
+            "button": styles.missionSecondButton
+        },
+
+    }
+
     const text_button = props.children.toString();
     const function_button = props.onClick;
 
+    // Pegar o valor 
+    const style_button = props.style_button == null | 
+        !(Object.keys(ButtonStyles).includes(props.style_button))  ? "main_color_app" : props.style_button;
+
+
+    // Selecionar o estilo do Butão e do texto
+    const styles_to_apply = ButtonStyles[style_button]
+
     return ( 
-        <TouchableOpacity onPress={function_button} style={styles.size_button} >
-            <Text style={styles.text_button}>
+        <ButtonApp mode="contained" onPress={function_button} style={styles_to_apply.button} >
+            <Text style={styles_to_apply.text}>
                 {text_button}
             </Text>
-        </TouchableOpacity>
+        </ButtonApp>
     );
 }
 
-export function SecondButtonApp(props){
-    const text_button = props.children.toString();
-    const function_button = props.onClick;
-
-    return ( 
-        <TouchableOpacity onPress={function_button} style={styles.sizeSecondButton} >
-            <Text style={styles.textSecondText}>
-                {text_button}
-            </Text>
-        </TouchableOpacity>
-    );
-}
-
-const styles = StyleSheet.create({
-    size_button: {
-        height: 52,
-        width: '90%',
-        backgroundColor: main_orange_color_app,
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius:10},
-    text_button: {
-        color: "#fff",
-        fontSize: 32,
-    },
-    sizeSecondButton: {
-        height: 35,
-        width: 150,
-        backgroundColor: main_orange_color_app,
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: 100},
-    textSecondText: {
-        color: "#fff",
-        fontSize: 18,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-  });
