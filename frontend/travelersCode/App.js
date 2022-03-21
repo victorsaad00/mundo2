@@ -7,6 +7,7 @@ import { useLoadedAssets } from "./hooks/useLoadedAssets";
 import Navigation from "./navigation";
 import { useColorScheme, View } from "react-native";
 import Button from "./components/Button/Button_app";
+import ProgressBar from "./components/ProgressBar/ProgressBar";
 import { Divider } from "react-native-paper";
 
 export default function App() {
@@ -26,6 +27,9 @@ export default function App() {
         <Button style_button="mission_main_color_app" onClick={()=> console.log('Botão 3')}>Teste</Button>
         <Divider style={{height:15}}></Divider>
         <Button style_button="mission_second_color_app" onClick={()=> console.log('Botão 4')}>x2</Button>
+        <Divider style={{height:15}}></Divider>
+        <ProgressBar progress={0.5}>5/10 concluída</ProgressBar>
+
         
         <StatusBar />
       </SafeAreaProvider>
