@@ -3,8 +3,8 @@ import Colors from "../../constants/Colors_app"
 
 export default StyleSheet.create({
     viewProgress: {
-        width: 250,
-        height: 25,
+        width: '100%',
+        height: 35,
         borderWidth: 1,
         backgroundColor: "#fff",
         borderColor: 'rgba(0, 0, 0, .2)',
@@ -13,7 +13,7 @@ export default StyleSheet.create({
         opacity: 20,
     },
     actualProgress: {
-        height: 25,
+        height: 35,
         backgroundColor: Colors.primary[20],
         borderWidth: 1,
         borderColor: Colors.primary[10],
@@ -24,6 +24,6 @@ export default StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center',
         fontWeight: 'bold',
-
+        fontSize: 18
     }
   });

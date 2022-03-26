@@ -32,12 +32,17 @@ export default function Button(props){
     const style_button = props.style_button == null | 
         !(Object.keys(ButtonStyles).includes(props.style_button))  ? "main_color_app" : props.style_button;
 
+    // Propriedade para desativar o button
+    const desactived = props.desactived == null ? false : props.desactived;
+
+    
 
     // Selecionar o estilo do Butão e do texto
     const styles_to_apply = ButtonStyles[style_button]
+    const color = props.desactived ? 'lightgrey' : styles_to_apply.button.backgroundColor;
 
     return ( 
-        <ButtonApp mode="contained" onPress={function_button} style={styles_to_apply.button} >
+        <ButtonApp disabled={desactived} mode="contained" onPress={function_button} style={[styles_to_apply.button,{backgroundColor: color}]} >
             <Text style={styles_to_apply.text}>
                 {text_button}
             </Text>
