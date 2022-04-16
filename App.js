@@ -1,7 +1,10 @@
 import "react-native-gesture-handler";
 
+import TravelersTheme from "./Themes"
+
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider as PaperProvider, Text } from 'react-native-paper';
 
 import { useLoadedAssets } from "./hooks/useLoadedAssets";
 import Navigation from "./navigation";
@@ -21,32 +24,33 @@ export default function App() {
   const card_1 = {
     world: 'Mundo l',
     name_world: 'Ilha Lovelace',
-    progress: [5,10],
+    progress: [5, 10],
     description: 'Continue junto com Fisher para ajudá-lo a criar o dispositivo Defender.',
     status: true,
   };
-  
+
   const card_2 = {
     world: 'Mundo ll',
     name_world: 'Penhasco de Turing',
     status: false,
   };
 
-  //console.log(card_1)
-
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
-      <SafeAreaProvider style={{alignItems:'center',justifyContent: 'center',}}>
-        {/* <Navigation colorScheme={colorScheme} /> */}
+      <PaperProvider theme={TravelersTheme}>
+
+        <View style={{height: "100%",display: 'flex',alignItems:"center",justifyContent:"center"}}>
+
+          <Button mode="primary" onClick={()=>{console.log("Primary")}}>Primary</Button>
+          <Divider style={{height:25}} />
+          <Button mode="second" onClick={()=>{console.log("Second")}}>Second!</Button>
+        </View>
         
-        <CardMundo infoCard={card_1} onClick={()=>{console.log("PIU")}} />
-        <Divider style={{height:30}}/>
-        <CardMundo infoCard={card_2} onClick={()=>{console.log("PIU")}} />
-        
-        <StatusBar />
-      </SafeAreaProvider>
+
+      </PaperProvider>
+
     );
   }
 }

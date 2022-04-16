@@ -13,7 +13,9 @@ export function useLoadedAssets() {
         SplashScreen.preventAutoHideAsync();
 
         // Load fonts
-        await Font.loadAsync(Ionicons.font);
+        await Font.loadAsync({
+          ...Ionicons.font,
+          "VCR_MONO": require("../assets/fonts/VCR_OSD_MONO_1.001.ttf")});
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);

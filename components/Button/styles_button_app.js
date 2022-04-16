@@ -7,6 +7,7 @@ export default StyleSheet.create({
         height: 52,
         width: '90%',
         backgroundColor: Colors.primary[10],
+        
         borderRadius:10},
     text_button: {
         alignContent: "center",
@@ -21,7 +22,7 @@ export default StyleSheet.create({
         borderRadius: 100},
     textSecondText: {
         color: "#fff",
-        fontSize: 16    ,
+        fontSize: 16,
         alignItems: 'center',
         justifyContent: 'center'
     },
