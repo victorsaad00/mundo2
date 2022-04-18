@@ -1,4 +1,3 @@
-import Colors from "../../constants/Colors_app"
 import {  StyleSheet } from "react-native";
 
 const button = StyleSheet.create({
@@ -23,6 +22,6 @@ const button = StyleSheet.create({
         color: "#fff",
         fontSize: 34,
     },
-})
+});
 
 export default button;
