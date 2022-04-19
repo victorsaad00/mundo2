@@ -1,6 +1,6 @@
 import { Button as ButtonApp, useTheme } from "react-native-paper";
 
-export default function Button(props) {
+const Button = (props) => {
   const { button, colors } = useTheme();
 
   const text_button = props.children.toString();
@@ -27,4 +27,6 @@ export default function Button(props) {
       {text_button}
     </ButtonApp>
   );
-}
+};
+
+export default Button;
