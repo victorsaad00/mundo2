@@ -1,6 +1,8 @@
 import { DefaultTheme, configureFonts } from "react-native-paper";
 import Colors from "../constants/Colors_app";
 import Button_theme from "./stylesComponents/Button";
+import Input_theme from "./stylesComponents/TextInput";
+import Text_theme from './stylesComponents/Text';
 
 const fontConfig = {
   default: {
@@ -33,6 +35,8 @@ const travelersTheme = {
     accent: Colors.primary[20],
     second: Colors.variant[10],
     second_light: Colors.variant[20],
+    flat: "#FFF",
+    black: "#000000",
     background: "#FFF",
     surface: "#fff",
     text: "#145DA0",
@@ -42,6 +46,8 @@ const travelersTheme = {
     backdrop: "#001021",
   },
   button: Button_theme,
+  input: Input_theme,
+  text: Text_theme,
   fonts: configureFonts(fontConfig),
 };
 // VCR_OSD_MONO_1

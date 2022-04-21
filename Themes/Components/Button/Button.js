@@ -1,6 +1,6 @@
 import { Button as ButtonApp, useTheme } from "react-native-paper";
 
-const Button = (props) => {
+const Button = ({size,...props}) => {
   const { button, colors } = useTheme();
 
   const text_button = props.children.toString();
@@ -14,14 +14,16 @@ const Button = (props) => {
     existe no component butão o style={button[mode]} e labelStyle={button[mode+"Text"]}*/
 
   const mode = props.mode == null ? "primary" : props.mode;
+  size = size == undefined ? "expansive" : size;
+
 
   return (
     <ButtonApp
       disabled={desactived}
       mode="contained"
       onPress={function_button}
-      labelStyle={button[mode + "Text"]}
-      style={[button[mode], { backgroundColor: colors[mode] }]}
+      labelStyle={[button[mode + "Text"], {fontSize:  button[size].fontSize}]}
+      style={[button[mode], button[size], { backgroundColor: colors[mode] }]}
       {...props}
     >
       {text_button}

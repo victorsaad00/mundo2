@@ -1,16 +1,20 @@
 import * as React from "react";
-import { TextInput } from "react-native-paper";
+import { TextInput, useTheme } from "react-native-paper";
 
-const Input = ({ Label, variant, ...props }) => {
+const Input = ({ Label, variant, size, ...props }) => {
   const [text, setText] = React.useState("");
-  //const { textInput } = React.useTheme();
+  const { input,colors } = useTheme();
+
+  size = size == undefined ? "expansive" : size
 
   return (
     <TextInput
+      outlineColor={colors.primary}
+      style={input[size]}
       label={Label}
       value={text}
       onChangeText={(text) => setText(text)}
-      variant={variant}
+      mode={variant}
       {...props}
     />
   );

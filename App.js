@@ -9,6 +9,8 @@ import { View } from "react-native";
 import Button from "./Themes/Components/Button/Button";
 import Input from "./Themes/Components/Input/Input";
 import Icon from "./images/icon.svg";
+import TravelersIcon from "./assets/Icons/TravelersIcon";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
@@ -33,7 +35,8 @@ export default function App() {
   } else {
     return (
       <PaperProvider theme={TravelersTheme}>
-        <View
+        
+        {/* <View
           style={{
             height: "100%",
             width: "100%",
@@ -42,10 +45,11 @@ export default function App() {
             justifyContent: "center",
           }}
         >
-          <Input label="ARROZ" variant="outlined" style={{ width: "90%" }} />
+          <TravelersIcon />
+          <Input label="ARROZ" variant="outlined" size="small" />
           <Divider style={{ height: 25 }} />
 
-          <Input label="ARROZ" variant="outlined" style={{ width: "90%" }} />
+          <Input label="ARROZ" variant="outlined" />
           <Divider style={{ height: 25 }} />
 
           <Button
@@ -58,14 +62,16 @@ export default function App() {
           </Button>
           <Divider style={{ height: 25 }} />
           <Button
-            mode="primary"
+            mode="flat"
+            size="small"
             onClick={() => {
               console.log("Second");
             }}
           >
             Entrar sem logar
           </Button>
-        </View>
+        </View> */}
+        <LoginPage/>
       </PaperProvider>
     );
   }
