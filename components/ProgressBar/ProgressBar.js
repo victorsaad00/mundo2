@@ -1,9 +1,9 @@
-import { Text, View } from "../Themed";
-
-import styles from "./StylesProgressBar.js";
+import { Text, View,  } from "../Themed";
+import { useTheme } from "react-native-paper";
 
 export default function ProgressBar(props) {
   // Propriedade para desativar o progress bar
+
   const desactived = props.desactived == null ? false : props.desactived;
   const text_children = props.children;
   const progress = props.progress == 0 ? 0.05 : props.progress;
@@ -16,27 +16,29 @@ export default function ProgressBar(props) {
 }
 
 const Activated_progress = function (props) {
+  const { progressBar,colors, } = useTheme();
   const text_children = props.children;
   const progress = props.progress == 0 ? 0.05 : props.progress;
 
   return (
-    <View style={styles.viewProgress}>
+    <View style={progressBar.viewProgress}>
       <View
         style={[
-          styles.actualProgress,
+          progressBar.actualProgress,
           { width: `${progress * 100}%`, color: "red" },
         ]}
       />
 
-      <Text style={styles.textProgress}>{text_children}</Text>
+      <Text style={progressBar.textProgress}>{text_children}</Text>
     </View>
   );
 };
 
 const Desactivated_progress = function (props) {
+  const { progressBar,colors, } = useTheme();
   return (
-    <View style={[styles.viewProgress, { borderColor: "rgba(0, 0, 0, .2)" }]}>
-      <Text style={[styles.textProgress, { color: "rgba(0, 0, 0, .2)" }]}>
+    <View style={[progressBar.viewProgress, { borderColor: "rgba(0, 0, 0, .2)" }]}>
+      <Text style={[progressBar.textProgress, { color: "rgba(0, 0, 0, .2)" }]}>
         ? ? ? ? ? ?
       </Text>
     </View>

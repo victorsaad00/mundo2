@@ -1,7 +1,7 @@
 import {  StyleSheet } from "react-native";
 import Colors from "../../constants/Colors_app"
 
-export default StyleSheet.create({
+const progressBar = StyleSheet.create({
     viewProgress: {
         width: '100%',
         height: 35,
@@ -27,3 +27,5 @@ export default StyleSheet.create({
         fontSize: 18
     }
   });
+
+export default progressBar;

@@ -1,11 +1,10 @@
-import { Text, View } from "../Themed";
+import { View } from "../Themed";
 
-import { Card } from "react-native-paper";
+import { Card,useTheme } from "react-native-paper";
 
-import Button from "../../Themes/Components/Button";
+import Button from "../../Themes/Components/Button/Button";
+import Text from "../../Themes/Components/Text/Text";
 import ProgressBar from "../ProgressBar/ProgressBar";
-
-import styles from "./StylesCardMundo.js";
 
 import Colors from "../../constants/Colors_app";
 
@@ -22,6 +21,7 @@ export default function CardMundo(props) {
     }   
 
     */
+  const { cardMundo } = useTheme();
   const { world, name_world, progress, description, status } = props.infoCard;
   const onclick = props.onClick;
 
@@ -36,11 +36,11 @@ export default function CardMundo(props) {
   const color_subtitle = status ? Colors.variant[10] : "grey";
 
   const description_component = status ? (
-    <Text style={styles.descriptionStyle}>{description}</Text>
+    <Text variant="black" style={cardMundo.descriptionStyle}>{description}</Text>
   ) : (
     <View
       style={[
-        styles.descriptionStyle,
+        cardMundo.descriptionStyle,
         { alignItems: "center", justifyContent: "center" },
       ]}
     >
@@ -50,12 +50,12 @@ export default function CardMundo(props) {
 
   return (
     <View style={{ width: "100%" }}>
-      <Card style={styles.Cardstyle}>
+      <Card style={cardMundo.Cardstyle}>
         <Card.Title
           title={world}
           subtitle={name_world}
-          titleStyle={[styles.titleStyle, { color: color_title }]}
-          subtitleStyle={[styles.subtitleStyle, { color: color_subtitle }]}
+          titleStyle={[cardMundo.titleStyle, { color: color_title }]}
+          subtitleStyle={[cardMundo.subtitleStyle, { color: color_subtitle }]}
         />
         <Card.Content>
           <ProgressBar desactived={!status} progress={perc_fases_concluidas}>
@@ -64,7 +64,7 @@ export default function CardMundo(props) {
           {description_component}
         </Card.Content>
 
-        <Card.Actions style={styles.buttonStyle}>
+        <Card.Actions style={cardMundo.buttonStyle}>
           <Button
             desactived={!status}
             style_button={"second_color_app"}

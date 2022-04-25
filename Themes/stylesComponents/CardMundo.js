@@ -1,7 +1,6 @@
 import {  StyleSheet } from "react-native";
 
-
-export default StyleSheet.create({
+const cardMundo = StyleSheet.create({
     Cardstyle:{
       display: 'flex',
       justifyContent: 'space-between',
@@ -29,3 +28,5 @@ export default StyleSheet.create({
       alignSelf: "flex-end",
     }
   });
+
+  export default cardMundo;
