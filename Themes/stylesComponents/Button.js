@@ -1,12 +1,24 @@
-import Colors from "../../constants/Colors_app"
 import {  StyleSheet } from "react-native";
+import Colors from "../../constants/Colors_app";
 
 const button = StyleSheet.create({
-    primary: {
+    small: {
+        width: '50%',
+        fontSize: 16,
         height: 52,
-        width: "90%",
+    },
+    medium: {
+        width: '75%',
+        fontSize: 20,
+        height: 52,
+    },
+    expansive: {
+        width: '90%',
+        fontSize: 24,
+        height: 52,
+    },
+    primary: {
         borderRadius:10,
-        
         justifyContent: 'center',
     },
     primaryText: {
@@ -14,8 +26,6 @@ const button = StyleSheet.create({
         fontSize: 34,
     },
     second: {
-        height: 52,
-        width: "90%",
         borderRadius:10,
         justifyContent: 'center',
     },
@@ -23,6 +33,14 @@ const button = StyleSheet.create({
         color: "#fff",
         fontSize: 34,
     },
-})
+    flat: {
+        borderRadius:10,
+        justifyContent: 'center',
+    },
+    flatText: {
+        color: Colors.variant[10],
+        fontSize: 34,
+    },
+});
 
 export default button;

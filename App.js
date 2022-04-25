@@ -1,37 +1,32 @@
 import "react-native-gesture-handler";
 
-import TravelersTheme from "./Themes"
+import TravelersTheme from "./Themes";
 
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Provider as PaperProvider, Text } from 'react-native-paper';
+import { Provider as PaperProvider, Divider } from "react-native-paper";
 
 import { useLoadedAssets } from "./hooks/useLoadedAssets";
-import Navigation from "./navigation";
-import { useColorScheme, View, Image } from "react-native";
-import Button from "./components/Button/Button";
-import ProgressBar from "./components/ProgressBar/ProgressBar";
-import CardMundo from "./components/CardMundo/CardMundo";
-import { Divider } from "react-native-paper";
-
-
-
+import { View } from "react-native";
+import Button from "./Themes/Components/Button/Button";
+import Input from "./Themes/Components/Input/Input";
+import Icon from "./images/icon.svg";
+import TravelersIcon from "./assets/Icons/TravelersIcon";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
-  const colorScheme = useColorScheme();
 
   const card_1 = {
-    world: 'Mundo l',
-    name_world: 'Ilha Lovelace',
+    world: "Mundo l",
+    name_world: "Ilha Lovelace",
     progress: [5, 10],
-    description: 'Continue junto com Fisher para ajudá-lo a criar o dispositivo Defender.',
+    description:
+      "Continue junto com Fisher para ajudá-lo a criar o dispositivo Defender.",
     status: true,
   };
 
   const card_2 = {
-    world: 'Mundo ll',
-    name_world: 'Penhasco de Turing',
+    world: "Mundo ll",
+    name_world: "Penhasco de Turing",
     status: false,
   };
 
@@ -40,17 +35,44 @@ export default function App() {
   } else {
     return (
       <PaperProvider theme={TravelersTheme}>
-
-        <View style={{height: "100%",display: 'flex',alignItems:"center",justifyContent:"center"}}>
-
-          <Button mode="primary" onClick={()=>{console.log("Primary")}}>Primary</Button>
-          <Divider style={{height:25}} />
-          <Button mode="second" onClick={()=>{console.log("Second")}}>Second!</Button>
-        </View>
         
+        {/* <View
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TravelersIcon />
+          <Input label="ARROZ" variant="outlined" size="small" />
+          <Divider style={{ height: 25 }} />
 
+          <Input label="ARROZ" variant="outlined" />
+          <Divider style={{ height: 25 }} />
+
+          <Button
+            mode="primary"
+            onClick={() => {
+              console.log("Primary");
+            }}
+          >
+            ENTRAR
+          </Button>
+          <Divider style={{ height: 25 }} />
+          <Button
+            mode="flat"
+            size="small"
+            onClick={() => {
+              console.log("Second");
+            }}
+          >
+            Entrar sem logar
+          </Button>
+        </View> */}
+        <LoginPage/>
       </PaperProvider>
-
     );
   }
 }
