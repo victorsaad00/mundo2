@@ -2,20 +2,19 @@ import "react-native-gesture-handler";
 
 import TravelersTheme from "./Themes";
 
-import { Provider as PaperProvider, Divider } from "react-native-paper";
+import { Provider as PaperProvider } from "react-native-paper";
 
 import { useLoadedAssets } from "./hooks/useLoadedAssets";
-import { View } from "react-native";
-import Button from "./Themes/Components/Button/Button";
-import Input from "./Themes/Components/Input/Input";
-import Icon from "./images/icon.svg";
-import TravelersIcon from "./assets/Icons/TravelersIcon";
 import LoginPage from "./pages/LoginPage/LoginPage";
+
 import CardMundo from "./components/CardMundo/CardMundo";
 import CardLevelComplete from "./components/CardLevelComplete";
+import RegisterPage from "./pages/RegisterPage";
+
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
+
 
   const card_1 = {
     world: "Mundo l",
@@ -45,7 +44,6 @@ export default function App() {
   } else {
     return (
       <PaperProvider theme={TravelersTheme}>
-        
         <View
           style={{
             height: "100%",
@@ -59,7 +57,46 @@ export default function App() {
           <CardLevelComplete infoCard={levelcard} onClick={() => {console.log("Teste")}}></CardLevelComplete>
         </View>
         {/* <LoginPage/> */}
+
       </PaperProvider>
     );
   }
+}
+
+{
+  /* <View
+  style={{
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <TravelersIcon />
+  <Input label="ARROZ" variant="outlined" size="small" />
+  <Divider style={{ height: 25 }} />
+
+  <Input label="ARROZ" variant="outlined" />
+  <Divider style={{ height: 25 }} />
+
+  <Button
+    mode="primary"
+    onClick={() => {
+      console.log("Primary");
+    }}
+  >
+    ENTRAR
+  </Button>
+  <Divider style={{ height: 25 }} />
+  <Button
+    mode="flat"
+    size="small"
+    onClick={() => {
+      console.log("Second");
+    }}
+  >
+    Entrar sem logar
+  </Button>
+</View> */
 }

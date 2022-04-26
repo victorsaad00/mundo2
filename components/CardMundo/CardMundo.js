@@ -6,8 +6,8 @@ import Button from "../../Themes/Components/Button/Button";
 import Text from "../../Themes/Components/Text/Text";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
-import Colors from "../../constants/Colors_app";
 
+import Colors from "../../constants/Colors_app";
 import IconLock from "../../images/iconLock.svg";
 
 export default function CardMundo(props) {
