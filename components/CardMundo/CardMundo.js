@@ -1,14 +1,9 @@
 import { Text, View } from "../Themed";
-
 import { Card } from "react-native-paper";
-
 import Button from "../../Themes/Components/Button";
 import ProgressBar from "../ProgressBar/ProgressBar";
-
 import styles from "./StylesCardMundo.js";
-
 import Colors from "../../constants/Colors_app";
-
 import IconLock from "../../images/iconLock.svg";
 
 export default function CardMundo(props) {
