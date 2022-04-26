@@ -3,6 +3,9 @@ import Colors from "../constants/Colors_app";
 import Button_theme from "./stylesComponents/Button";
 import Input_theme from "./stylesComponents/TextInput";
 import Text_theme from './stylesComponents/Text';
+import ProgressB_theme from './stylesComponents/ProgressBar';
+import mundoCard_theme from './stylesComponents/CardMundo';
+import levelCompleteCard_theme from './stylesComponents/LevelCompletCard';
 
 const fontConfig = {
   default: {
@@ -48,6 +51,9 @@ const travelersTheme = {
   button: Button_theme,
   input: Input_theme,
   text: Text_theme,
+  progressBar: ProgressB_theme,
+  cardMundo: mundoCard_theme,
+  cardLevelComplete: levelCompleteCard_theme,
   fonts: configureFonts(fontConfig),
 };
 // VCR_OSD_MONO_1
