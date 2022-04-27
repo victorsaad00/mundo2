@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
 const text = StyleSheet.create({
+    mini: {
+        fontSize: 16, 
+    },
     small: {
         fontSize: 22,
     },

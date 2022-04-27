@@ -2,14 +2,19 @@ import "react-native-gesture-handler";
 
 import TravelersTheme from "./Themes";
 
+import { View } from './components/Themed';
+
 import { Provider as PaperProvider } from "react-native-paper";
 
 import { useLoadedAssets } from "./hooks/useLoadedAssets";
 import LoginPage from "./pages/LoginPage/LoginPage";
 
 import CardMundo from "./components/CardMundo/CardMundo";
-import CardLevelComplete from "./components/CardLevelComplete";
-import RegisterPage from "./pages/RegisterPage";
+import AlertLevelComplete from "./components/AlertLevelComplete";
+import BottomHomePage from "./pages/BottomHomePage";
+import DropDown from "./Themes/Components/DropDown";
+import Text from "./Themes/Components/Text/Text";
+import ColorChoose from "./components/ColorChoose";
 
 
 export default function App() {
@@ -33,8 +38,8 @@ export default function App() {
 
   const levelcard ={
     mapName: "Entrada da doca",
-    description: 'Com estas amostras que você coletou finalmente poderemos criar o Defender. Não seria justo se eu não premiasse com um pouco que eu tenho, você coletou grandes amostras.',
-    experience: "8xp",
+    description: '\t\t\t\t\t\t\t\tCom estas amostras que você coletou finalmente poderemos criar o Defender. Não seria justo se eu não premiasse com um pouco que eu tenho, você coletou grandes amostras.',
+    experience: "8 xp",
     reward: "5 moedas",
     lock: ["Desbloqueado diário do viajante dia 9.",'Desbloqueado missão “Liberte a ilha”.','Criado o dispositivo Defender.']
   }
@@ -44,19 +49,22 @@ export default function App() {
   } else {
     return (
       <PaperProvider theme={TravelersTheme}>
-        <View
+        {/* <View
           style={{
-            height: "100%",
+            height: 500 ,
             width: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          {/* <TravelersIcon /> */}
-          <CardLevelComplete infoCard={levelcard} onClick={() => {console.log("Teste")}}></CardLevelComplete>
-        </View>
+        
+        
+          
+        </View> */}
         {/* <LoginPage/> */}
+        <BottomHomePage />
+        
 
       </PaperProvider>
     );

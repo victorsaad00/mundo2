@@ -4,30 +4,31 @@ import Colors from "../../constants/Colors_app"
 const levelCompleteCard = StyleSheet.create({
     Cardstyle:{
         display: 'flex',
-        justifyContent: 'space-between',
-        marginHorizontal: 16,
-        height: "90%",
-        paddingHorizontal: 8,
-        paddingVertical: 32,
+        height: 650,
         elevation: 10,
       },
       titleStyle:{
-        fontSize: 28,
+        fontSize: 26,
+        paddingTop: 16,
+        marginBottom: 0
       },
       subtitleStyle:{
         fontSize: 24,
-        paddingVertical: 16
+        marginTop: 16
+      },
+      opacity: {
+        opacity: 0.5,
       },
       descriptionStyle:{
         width: "100%",
-        height: 290,
-        fontSize: 24,
+        fontSize: 20,
         lineHeight: 30,
+        textAlign: 'justify',
         
-
       },
       buttonStyle:{
-        alignSelf: "flex-end",
+        alignSelf: "center",
+        paddingTop: 0
       }
   });
 
