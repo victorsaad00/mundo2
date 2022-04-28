@@ -8,13 +8,14 @@ import { Provider as PaperProvider } from "react-native-paper";
 
 import { useLoadedAssets } from "./hooks/useLoadedAssets";
 import LoginPage from "./pages/LoginPage/LoginPage";
-
+import Button from "./Themes/Components/Button/Button"
 import CardMundo from "./components/CardMundo/CardMundo";
 import AlertLevelComplete from "./components/AlertLevelComplete";
 import BottomHomePage from "./pages/BottomHomePage";
 import DropDown from "./Themes/Components/DropDown";
 import Text from "./Themes/Components/Text/Text";
 import ColorChoose from "./components/ColorChoose";
+import ProgressBar from "./components/ProgressBar/ProgressBar";
 
 
 export default function App() {
@@ -58,8 +59,12 @@ export default function App() {
             justifyContent: "center",
           }}
         >
-        
-        
+          <Button
+            desactived={true}
+            onClick={() => {console.log("teste")}}
+          >
+            Entrar
+          </Button>
           
         </View> */}
         {/* <LoginPage/> */}

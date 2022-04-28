@@ -16,6 +16,8 @@ const Button = ({size,...props}) => {
   const mode = props.mode == null ? "primary" : props.mode;
   size = size == undefined ? "expansive" : size;
 
+  const colorBackground = desactived ? "#999999" : colors[mode]
+
 
   return (
     <ButtonApp
@@ -23,7 +25,7 @@ const Button = ({size,...props}) => {
       mode="contained"
       onPress={function_button}
       labelStyle={[button[mode + "Text"], {fontSize:  button[size].fontSize}]}
-      style={[button[mode], button[size], { backgroundColor: colors[mode] }]}
+      style={[button[mode], button[size], { backgroundColor: colorBackground }]}
       {...props}
     >
       {text_button}

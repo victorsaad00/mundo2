@@ -24,7 +24,8 @@ const progressBar = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center',
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
+        color: 'black'
     }
   });
 

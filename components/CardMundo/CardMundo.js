@@ -21,9 +21,10 @@ export default function CardMundo(props) {
     }   
 
     */
-  const { cardMundo } = useTheme();
+  const { cardMundo,colors } = useTheme();
   const { world, name_world, progress, description, status } = props.infoCard;
   const onclick = props.onClick;
+  
 
   const perc_fases_concluidas =
     progress != undefined ? progress[0] / progress[1] : null;
@@ -32,9 +33,9 @@ export default function CardMundo(props) {
     ? `${progress[0]}/${progress[1]} concluída`
     : "";
 
-  const color_title = status ? "black" : "grey";
+  const color_title = status ? colors.black : "grey";
   const color_subtitle = status ? Colors.variant[10] : "grey";
-
+  
   const description_component = status ? (
     <Text variant="black" style={cardMundo.descriptionStyle}>{description}</Text>
   ) : (
@@ -67,7 +68,6 @@ export default function CardMundo(props) {
         <Card.Actions style={cardMundo.buttonStyle}>
           <Button
             desactived={!status}
-            style_button={"second_color_app"}
             onClick={onclick}
           >
             Entrar

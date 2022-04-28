@@ -1,4 +1,5 @@
-import { Text, View,  } from "../Themed";
+import { View } from "../Themed";
+import Text from "../../Themes/Components/Text/Text"
 import { useTheme } from "react-native-paper";
 
 export default function ProgressBar(props) {

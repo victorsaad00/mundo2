@@ -41,6 +41,9 @@ const button = StyleSheet.create({
         color: Colors.variant[10],
         fontSize: 34,
     },
+    desactived:{
+        
+    }
 });
 
 export default button;

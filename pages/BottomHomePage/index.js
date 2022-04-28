@@ -33,6 +33,7 @@ const BottomHomePage = (props) => {
   return (
     <BottomNavigation
         inactiveColor={colors.surface}
+        safeAreaInsets={{top:200}}
         activeColor={"#c2c2c2"}
       navigationState={{ index, routes }}
       onIndexChange={setIndex}

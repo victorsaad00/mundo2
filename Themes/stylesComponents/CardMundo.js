@@ -5,6 +5,7 @@ const cardMundo = StyleSheet.create({
       display: 'flex',
       justifyContent: 'space-between',
       marginHorizontal: 16,
+      marginVertical: 16,
       height: 350,
       paddingHorizontal: 8,
       paddingVertical: 32,
@@ -25,7 +26,7 @@ const cardMundo = StyleSheet.create({
       paddingVertical: 16
     },
     buttonStyle:{
-      alignSelf: "flex-end",
+      alignSelf: "center",
     }
   });
 
