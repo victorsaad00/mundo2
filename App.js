@@ -12,11 +12,12 @@ import Button from "./Themes/Components/Button/Button"
 import CardMundo from "./components/CardMundo/CardMundo";
 import AlertLevelComplete from "./components/AlertLevelComplete";
 import BottomHomePage from "./pages/BottomHomePage";
+import WorldPage from "./pages/WorldPage"; 
 import DropDown from "./Themes/Components/DropDown";
 import Text from "./Themes/Components/Text/Text";
 import ColorChoose from "./components/ColorChoose";
 import ProgressBar from "./components/ProgressBar/ProgressBar";
-
+import Game from "./components/Game/Game"
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
@@ -52,11 +53,12 @@ export default function App() {
       <PaperProvider theme={TravelersTheme}>
         {/* <View
           style={{
-            height: 500 ,
+            height: 700 ,
             width: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            backgroundColor: 'yellow'
           }}
         >
           <Button
@@ -65,10 +67,13 @@ export default function App() {
           >
             Entrar
           </Button>
+          <Game />
+          
           
         </View> */}
+        <WorldPage info_mundo={card_1} />
         {/* <LoginPage/> */}
-        <BottomHomePage />
+        {/* <BottomHomePage /> */}
         
 
       </PaperProvider>

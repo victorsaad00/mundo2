@@ -7,10 +7,11 @@ import Text from "../../Themes/Components/Text/Text";
 import { View } from "../../components/Themed";
 import Alert from "../../components/Alert";
 import HomePage from "../HomePage"
+import DiarioPage from "../DiarioPage";
 
 const HomePageBottom = () => <HomePage />;
 
-const AlbumsRoute = () => <Text>Albums</Text>;
+const AlbumsRoute = () => <DiarioPage />;
 
 const RecentsRoute = () => <Text>Recents</Text>;
 
