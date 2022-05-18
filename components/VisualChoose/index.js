@@ -1,12 +1,12 @@
 import { Button as ButtonApp, useTheme,Dialog, Portal } from "react-native-paper";
 import * as React from "react";
 import { View } from "../Themed";
-import {FlatList, TouchableOpacity, SafeAreaView } from 'react-native'
+import {FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign';
 import Text from "../../Themes/Components/Text/Text";
 
 
-const ColorChoose = ({size,...props}) => {
+const VisualChoose = ({size,...props}) => {
     const {  colors,colorchoose } = useTheme();
     // const cores = [
     //     {
@@ -55,25 +55,28 @@ const ColorChoose = ({size,...props}) => {
     //         selected: false,
     //     },
     // ]
-    const [cores,setCores] = React.useState(props.listItems);
-    const [cor,stateCor] = props.state;
+    const [visuais,setVisuais] = React.useState([]);
+    const [idColor,setIdColor] = props.state;
+    React.useEffect(() => {
+        setVisuais(props.listItems);
+    })
 
     const handleSelection = (id) => {
-        const beforeIndexCor = cores.findIndex((item) => item.selected == true);
-        const indexCor = cores.findIndex((item) => item.id == id);
+        const beforeIndexCor = visuais.findIndex((item) => item.selected == true);
+        const indexCor = visuais.findIndex((item) => item.id == id);
         
-        var valueBeforeCor = cores[beforeIndexCor];
-        var valueCor = cores[indexCor];
+        var valueBeforeCor = visuais[beforeIndexCor];
+        var valueCor = visuais[indexCor];
 
         valueBeforeCor.selected = false;
         valueCor.selected = true;
 
-        var copyCores = [...cores]
-        copyCores[beforeIndexCor] = valueBeforeCor;
-        copyCores[indexCor] = valueCor
+        var copyVisuais = [...visuais]
+        copyVisuais[beforeIndexCor] = valueBeforeCor;
+        copyVisuais[indexCor] = valueCor
 
-        setCores(copyCores);
-        stateCor(valueCor.name);
+        setVisuais(copyVisuais);
+        setIdColor(valueCor.id);
      
      }
     
@@ -81,17 +84,18 @@ const ColorChoose = ({size,...props}) => {
         const color_border = item.selected ?  `rgba(224,105,0,0.75)` : `rgba(241,241,241,0.9)`;
         return (
         <TouchableOpacity onPress={() => handleSelection(item.id)} style={{borderRadius:20}}>
-            <View style={{
-                backgroundColor: item.cor, 
+            <Image style={{
+                backgroundColor: `rgba(241,241,241,0.9)`, 
                 width: 50, 
                 height: 50,
                 marginHorizontal: 16,
                 borderRadius:30,
                 borderWidth:10,
                 borderColor: color_border
-                }}>
-            
-            </View>
+                }}
+                source={item.pathHair}
+                />
+
         </TouchableOpacity>
         );}
     
@@ -99,7 +103,7 @@ const ColorChoose = ({size,...props}) => {
         <View style={[colorchoose.viewStyle,{backgroundColor:colors.primary}]} >
             <Icon name="left" size={30} color={colors.black} style={{opacity:0.5}}/>
             <FlatList 
-                data={cores}
+                data={visuais}
                 style={{height:50,flexGrow: 0}}
                 renderItem={ItemColor}
                 horizontal
@@ -110,4 +114,4 @@ const ColorChoose = ({size,...props}) => {
     );
 };
 
-export default ColorChoose;
+export default VisualChoose;
