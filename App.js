@@ -2,27 +2,27 @@ import "react-native-gesture-handler";
 
 import TravelersTheme from "./Themes";
 
-import { View } from './components/Themed';
+import { View } from "./components/Themed";
 
 import { Provider as PaperProvider } from "react-native-paper";
 
 import { useLoadedAssets } from "./hooks/useLoadedAssets";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import Button from "./Themes/Components/Button/Button"
+import Button from "./Themes/Components/Button/Button";
 import CardMundo from "./components/CardMundo/CardMundo";
 import AlertLevelComplete from "./components/AlertLevelComplete";
-import CustomerPage from "./pages/CustomerPage/"
+import CustomerPage from "./pages/CustomerPage/";
 import BottomHomePage from "./pages/BottomHomePage";
-import WorldPage from "./pages/WorldPage"; 
+import WorldPage from "./pages/WorldPage";
 import DropDown from "./Themes/Components/DropDown";
 import Text from "./Themes/Components/Text/Text";
 import ColorChoose from "./components/ColorChoose";
 import ProgressBar from "./components/ProgressBar/ProgressBar";
-import Game from "./components/Game/Game"
+import Game from "./components/Game/Game";
+import RegisterPage from "./pages/RegisterPage";
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
-
 
   const card_1 = {
     world: "Mundo l",
@@ -39,13 +39,18 @@ export default function App() {
     status: false,
   };
 
-  const levelcard ={
+  const levelcard = {
     mapName: "Entrada da doca",
-    description: '\t\t\t\t\t\t\t\tCom estas amostras que você coletou finalmente poderemos criar o Defender. Não seria justo se eu não premiasse com um pouco que eu tenho, você coletou grandes amostras.',
+    description:
+      "\t\t\t\t\t\t\t\tCom estas amostras que você coletou finalmente poderemos criar o Defender. Não seria justo se eu não premiasse com um pouco que eu tenho, você coletou grandes amostras.",
     experience: "8 xp",
     reward: "5 moedas",
-    lock: ["Desbloqueado diário do viajante dia 9.",'Desbloqueado missão “Liberte a ilha”.','Criado o dispositivo Defender.']
-  }
+    lock: [
+      "Desbloqueado diário do viajante dia 9.",
+      "Desbloqueado missão “Liberte a ilha”.",
+      "Criado o dispositivo Defender.",
+    ],
+  };
 
   if (!isLoadingComplete) {
     return null;
@@ -72,12 +77,11 @@ export default function App() {
           
         
         </View> */}
-        <CustomerPage />
+        {/* <CustomerPage /> */}
         {/* <WorldPage info_mundo={card_1}/> */}
         {/* <LoginPage/> */}
         {/* <BottomHomePage /> */}
-        
-
+        <RegisterPage />
       </PaperProvider>
     );
   }
