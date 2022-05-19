@@ -11,7 +11,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Button from "./Themes/Components/Button/Button";
 import CardMundo from "./components/CardMundo/CardMundo";
 import AlertLevelComplete from "./components/AlertLevelComplete";
-import CustomerPage from "./pages/CustomerPage/";
+import CustomerPage from "./pages/CustomerPage";
 import BottomHomePage from "./pages/BottomHomePage";
 import WorldPage from "./pages/WorldPage";
 import DropDown from "./Themes/Components/DropDown";

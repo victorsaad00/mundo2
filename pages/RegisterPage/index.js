@@ -49,7 +49,7 @@ const RegisterPage = (props) => {
     setConfirmPassword("");
   };
 
-  const register = () => {
+  const register = async () => {
     try {
       let user = {
         name: "",
@@ -106,17 +106,15 @@ const RegisterPage = (props) => {
         usedItems: usedItems,
         items: items,
       };
-
       //return user;
       //sendUser(user);
       //console.log(user);
-      const response = axios.post("http://127.0.0.1:3000/register", user);
+      const response = await axios.post("http://10.0.2.2:3000/register",user);
 
-      console.log(response);
       console.log(response.data);
       setEmptyField();
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 
