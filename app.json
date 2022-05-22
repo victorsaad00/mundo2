@@ -4,11 +4,11 @@
     "slug": "expo-template-tabs",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./images/icon.png",
+    "icon": "./src/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./images/splash.png",
+      "image": "./src/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,12 +21,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./images/adaptive-icon.png",
+        "foregroundImage": "./src/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./images/favicon.png"
+      "favicon": "./src/images/favicon.png"
     }
   }
 }

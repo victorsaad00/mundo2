@@ -10,6 +10,14 @@ module.exports = function (api) {
         },
       ],
     ],
-    plugins: ["react-native-reanimated/plugin"],
+    plugins: [
+      "react-native-reanimated/plugin",
+    [
+      'babel-plugin-root-import',
+      {
+        rootPathPrefix: '@root/',
+        rootPathSuffix: './src'
+      }
+    ]],
   };
 };

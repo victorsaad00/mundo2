@@ -1,25 +1,31 @@
 import "react-native-gesture-handler";
 
-import TravelersTheme from "./Themes";
+import TravelersTheme from "./src/Themes";
 
-import { View } from "./components/Themed";
+import { View } from "./src/components/Themed";
 
 import { Provider as PaperProvider } from "react-native-paper";
 
-import { useLoadedAssets } from "./hooks/useLoadedAssets";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import Button from "./Themes/Components/Button/Button";
-import CardMundo from "./components/CardMundo/CardMundo";
-import AlertLevelComplete from "./components/AlertLevelComplete";
-import CustomerPage from "./pages/CustomerPage";
-import BottomHomePage from "./pages/BottomHomePage";
-import WorldPage from "./pages/WorldPage";
-import DropDown from "./Themes/Components/DropDown";
-import Text from "./Themes/Components/Text/Text";
-import ColorChoose from "./components/ColorChoose";
-import ProgressBar from "./components/ProgressBar/ProgressBar";
-import Game from "./components/Game/Game";
-import RegisterPage from "./pages/RegisterPage";
+
+import { useLoadedAssets } from "./src/hooks/useLoadedAssets";
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator  } from '@react-navigation/native-stack';
+
+import LoginPage from "./src/pages/LoginPage/LoginPage";
+import Button from "./src/Themes/Components/Button/Button";
+import CardMundo from "./src/components/CardMundo/CardMundo";
+import AlertLevelComplete from "./src/components/AlertLevelComplete";
+import CustomerPage from "./src/pages/CustomerPage";
+import BottomHomePage from "./src/pages/BottomHomePage";
+import WorldPage from "./src/pages/WorldPage";
+import DropDown from "./src/Themes/Components/DropDown";
+import Text from "./src/Themes/Components/Text/Text";
+import ColorChoose from "./src/components/ColorChoose";
+import ProgressBar from "./src/components/ProgressBar/ProgressBar";
+import Game from "./src/components/Game/Game";
+import RegisterPage from "./src/pages/RegisterPage";
+import AppBar from "./src/Themes/Components/AppBar/AppBar";
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
@@ -52,6 +58,8 @@ export default function App() {
     ],
   };
 
+  const Stack = createNativeStackNavigator();
+
   if (!isLoadingComplete) {
     return null;
   } else {
@@ -78,49 +86,18 @@ export default function App() {
         
         </View> */}
         {/* <CustomerPage /> */}
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={BottomHomePage} options={{ headerShown: false }}/>
+            <Stack.Screen name="Visual" component={CustomerPage} options={{ headerShown: false }} />
+            <Stack.Screen name="WorldPage" component={WorldPage} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
         {/* <WorldPage info_mundo={card_1}/> */}
         {/* <LoginPage/> */}
         {/* <BottomHomePage /> */}
-        <RegisterPage />
+        {/* <RegisterPage /> */}
       </PaperProvider>
     );
   }
-}
-
-{
-  /* <View
-  style={{
-    height: "100%",
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <TravelersIcon />
-  <Input label="ARROZ" variant="outlined" size="small" />
-  <Divider style={{ height: 25 }} />
-
-  <Input label="ARROZ" variant="outlined" />
-  <Divider style={{ height: 25 }} />
-
-  <Button
-    mode="primary"
-    onClick={() => {
-      console.log("Primary");
-    }}
-  >
-    ENTRAR
-  </Button>
-  <Divider style={{ height: 25 }} />
-  <Button
-    mode="flat"
-    size="small"
-    onClick={() => {
-      console.log("Second");
-    }}
-  >
-    Entrar sem logar
-  </Button>
-</View> */
 }
