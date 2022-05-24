@@ -48,7 +48,7 @@ const travelersTheme = {
     error: "#B71F0E",
     disabled: "#BEC6C6",
     placeholder: "#1481BA",
-    backdrop: "rgba(32,32,32,0.4)",
+    backdrop: "rgba(32,32,32,0.75)",
   },
   button: Button_theme,
   input: Input_theme,

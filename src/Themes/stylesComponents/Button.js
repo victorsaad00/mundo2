@@ -37,9 +37,16 @@ const button = StyleSheet.create({
         borderRadius:10,
         justifyContent: 'center',
     },
+    surface: {
+        borderRadius:10,
+        justifyContent: 'center',
+    },
+    surfaceText: {
+        borderRadius:10,
+        justifyContent: 'center',
+    },
     flatText: {
-        color: Colors.variant[10],
-        fontSize: 34,
+        color: "#FFF",
     },
     desactived:{
         
