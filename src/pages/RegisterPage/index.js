@@ -5,10 +5,12 @@ import Input from "../../Themes/Components/Input/Input";
 import Button from "../../Themes/Components/Button/Button";
 import { View } from "../../components/Themed";
 import Alert from "../../components/Alert";
+import { useNavigation } from "@react-navigation/native";
 
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 const RegisterPage = (props) => {
+  const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -109,7 +111,7 @@ const RegisterPage = (props) => {
       //return user;
       //sendUser(user);
       //console.log(user);
-      const response = await axios.post("http://10.0.2.2:3000/register",user);
+      const response = await axios.post("http://10.0.2.2:3000/register", user);
 
       console.log(response.data);
       setEmptyField();
@@ -121,7 +123,10 @@ const RegisterPage = (props) => {
   return (
     <SafeAreaView>
       <Appbar>
-        <Appbar.BackAction color={colors.surface} />
+        <Appbar.BackAction
+          color={colors.surface}
+          onPress={() => navigation.goBack("Login")}
+        />
         <Appbar.Content color={colors.surface} title="Register Page" />
       </Appbar>
       <View
