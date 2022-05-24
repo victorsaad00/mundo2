@@ -65,7 +65,7 @@ export default function App() {
   } else {
     return (
       <PaperProvider theme={TravelersTheme}>
-        {/* <View
+        <View
           style={{
             height: 700 ,
             width: "100%",
@@ -75,24 +75,19 @@ export default function App() {
             backgroundColor: 'yellow'
           }}
         >
-          <Button
-            desactived={true}
-            onClick={() => {console.log("teste")}}
-          >
-            Entrar
-          </Button>
           <Game />
           
         
-        </View> */}
+        </View>
         {/* <CustomerPage /> */}
-        <NavigationContainer>
+        {/* <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={BottomHomePage} options={{ headerShown: false }}/>
             <Stack.Screen name="Visual" component={CustomerPage} options={{ headerShown: false }} />
             <Stack.Screen name="WorldPage" component={WorldPage} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }}/>
           </Stack.Navigator>
-        </NavigationContainer>
+        </NavigationContainer> */}
         {/* <WorldPage info_mundo={card_1}/> */}
         {/* <LoginPage/> */}
         {/* <BottomHomePage /> */}

@@ -10,12 +10,14 @@
     {
         "id": 2,
         "world": "Mundo ll",
+        "progress": [0, 10],
         "name_world": "Penhasco de Turing",
         "status": false
       },
     {
         "id": 3,
         "world": "Mundo lll",
+        "progress": [0, 10],
         "name_world": "Floresta Conectada",
         "status": false
         }

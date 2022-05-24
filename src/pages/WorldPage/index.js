@@ -14,6 +14,8 @@ const WorldPage = (props) => {
   const { colors } = useTheme();
 
   
+
+  
   const navigation = useNavigation();
   const route = useRoute();
 

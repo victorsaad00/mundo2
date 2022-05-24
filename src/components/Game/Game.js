@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {AppRegistry,View,StyleSheet,ImageBackground, Dimensions,  } from 'react-native';
+import { IconButton, useTheme } from 'react-native-paper'
 
 import { GameEngine } from "react-native-game-engine";
 import Button from '../../Themes/Components/Button/Button';
@@ -20,6 +21,7 @@ export default class Level extends Component {
     }
 
     render(){
+        
         return (
             <View style={{height:500}}>
                 <View style={styles.container}>
@@ -46,14 +48,45 @@ export default class Level extends Component {
                     </GameEngine>
                     
                 </View>
-                <Button onPress={()=>{this.engine.dispatch({type: 'move-left'})}}
-                 size="flat">Esquerda</Button>
-                <Button onPress={()=>{this.engine.dispatch({type: 'move-right'})}} 
-                size="flat">Direita</Button>
-                <Button onPress={()=>{this.engine.dispatch({type: 'move-up'})}}
-                 size="flat">Cima</Button>
-                <Button onPress={()=>{this.engine.dispatch({type: 'move-down'})}} 
-                size="flat">Baixo</Button>
+                <View style={{alignItems: 'center',flexDirection: "row"}}>
+                    <View style={{flex:1,alignItems: 'center'}}>
+                        <IconButton
+                            icon="arrow-up"
+                            style={{backgroundColor: '#E36A00'}}
+                            color="#FFF"
+                            size={20}
+                            onPress={()=>{this.engine.dispatch({type: 'move-up'})}}
+                        />
+                        <View style={{flexDirection: "row",width: 150,justifyContent: "space-between"}}>
+                            <IconButton
+                                icon="arrow-left"
+                                style={{backgroundColor: '#E36A00'}}
+                                color="#FFF"
+                                size={20}
+                                onPress={()=>{this.engine.dispatch({type: 'move-left'})}}
+                            />
+                            <IconButton
+                                icon="arrow-right"
+                                style={{backgroundColor: '#E36A00'}}
+                                color="#FFF"
+                                size={20}
+                                onPress={()=>{this.engine.dispatch({type: 'move-right'})}}
+                            />
+                        </View>
+                        <IconButton
+                            icon="arrow-down"
+                            style={{backgroundColor: '#E36A00'}}
+                            color="#FFF"
+                            size={20}
+                            onPress={()=>{this.engine.dispatch({type: 'move-down'})}}
+                        />
+                    </View>
+                    <View style={{flex:1}}>
+                        <Button onPress={() =>{}}>
+                            teste
+                        </Button>
+                    </View>
+                </View>
             </View>
         
         )

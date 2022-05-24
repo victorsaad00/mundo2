@@ -6,7 +6,7 @@ import Input from "../../Themes/Components/Input/Input";
 import Button from "../../Themes/Components/Button/Button";
 import Text from "../../Themes/Components/Text/Text";
 import { View } from "../../components/Themed";
-import Alert from "../../components/Alert";
+import AlertDiario from "../../components/AlertDiario";
 
 import { NavigationContainer,useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,6 +18,9 @@ const DiarioPage = (props) => {
   const { colors } = useTheme();
 
   const navigation = useNavigation()
+
+  const [infoShow,setInfoShow] = useState({});
+  const [visible,setVisible] = useState(false);
 
   const number_fases = 5;
 
@@ -63,6 +66,8 @@ const DiarioPage = (props) => {
         <Appbar.Action color={colors.surface} icon="brush" onPress={()=> navigation.push("Visual")} />
       </Appbar>
 
+      <AlertDiario visible={visible} hidedialog={()=>{setVisible(false)}} infoCard={infoShow} />
+
       <ScrollView>
       <View style={{marginBottom: 128}}>
         <List.Accordion
@@ -74,7 +79,13 @@ const DiarioPage = (props) => {
             } else {
               return <List.Icon {...props} icon="pencil-outline" />
             }
-          }} key={item.level} onPress={()=>{console.log("Piu")}} title={item.name} />)}
+          }} key={item.level} onPress={()=>{
+            setInfoShow({
+              "title": item.name,
+              "description": item.description
+            })
+            setVisible(true)
+          }} title={item.name} />)}
         </List.Accordion>
         <List.Accordion
           title="Mundo ll - Penhasco de Turing"
