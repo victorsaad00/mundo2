@@ -6,11 +6,10 @@ import { View } from "./src/components/Themed";
 
 import { Provider as PaperProvider } from "react-native-paper";
 
-
 import { useLoadedAssets } from "./src/hooks/useLoadedAssets";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator  } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import LoginPage from "./src/pages/LoginPage/LoginPage";
 import Button from "./src/Themes/Components/Button/Button";
@@ -65,7 +64,7 @@ export default function App() {
   } else {
     return (
       <PaperProvider theme={TravelersTheme}>
-        <View
+      {/*<View
           style={{
             height: 700 ,
             width: "100%",
@@ -78,16 +77,37 @@ export default function App() {
           <Game />
           
         
-        </View>
+        </View>*/}
         {/* <CustomerPage /> */}
-        {/* <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={BottomHomePage} options={{ headerShown: false }}/>
-            <Stack.Screen name="Visual" component={CustomerPage} options={{ headerShown: false }} />
-            <Stack.Screen name="WorldPage" component={WorldPage} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }}/>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              name="Home"
+              component={BottomHomePage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Visual"
+              component={CustomerPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="WorldPage"
+              component={WorldPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="RegisterPage"
+              component={RegisterPage}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
-        </NavigationContainer> */}
+        </NavigationContainer> 
         {/* <WorldPage info_mundo={card_1}/> */}
         {/* <LoginPage/> */}
         {/* <BottomHomePage /> */}
