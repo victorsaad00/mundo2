@@ -14,17 +14,35 @@ const LoginPage = (props) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const LoginAuthentication = async () => {
+    setLoginError(false);
+    setPasswordError(false);
     try {
+      if (email === null || email === "") {
+        setLoginError(true);
+        return;
+      }
+
+      if (password === null || password === "") {
+        setPasswordError(true);
+        return;
+      }
+
       const params = { email: email, password: password };
       const res = await axios.post("http://10.0.2.2:3000/login", params);
       const user = res.data;
-      await AsyncStorage.setItem("@user", JSON.stringify(user)); // making global user
-      //   const teste = await AsyncStorage.getItem("@user");
-      //   console.log(teste);
 
-      navigation.navigate("Home");
+      if (res.status != "200") {
+        setLoginError(true);
+        setPasswordError(true);
+        return;
+      } else {
+        await AsyncStorage.setItem("@user", JSON.stringify(user));
+        navigation.navigate("Home");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +70,7 @@ const LoginPage = (props) => {
         keyboardType="email-address"
         value={email}
         onChangeText={(text) => setEmail(text)}
+        error={loginError}
       />
 
       <Input
@@ -62,6 +81,7 @@ const LoginPage = (props) => {
         value={password}
         right={<TextInput.Icon name="eye-off-outline" />}
         onChangeText={(text) => setPassword(text)}
+        error={passwordError}
       />
 
       <View
