@@ -29,8 +29,6 @@ const HomePage = (props) => {
 
   const [retrieve, setRetrieve] = useState(false);
   const [worldInfo,setWorldInfo] = useState([]);
-  
-  const navigation = useNavigation()
  
   const setconfig = async () =>{
 
@@ -94,30 +92,16 @@ const HomePage = (props) => {
             data={worldInfo}
             renderItem={({ item }) => {
               return (
-                <CardMundo infoCard={item} onClick={()=> {navigation.push("WorldPage",{mundo:item.id})}}/>
+                <CardMundo infoCard={item} 
+                onClick={()=> {
+                  navigation.push("WorldPage",{mundo:item.id})
+                }}/>
               )
             }}
             keyExtractor={item => item.id}
           />}
         
           {/* <Divider style={{height:100}}/> */}
-
-      <View style={{ marginBottom: 128 }}>
-        <FlatList
-          data={jsonMundos}
-          renderItem={({ item }) => {
-            return (
-              <CardMundo
-                infoCard={item}
-                onClick={() => {
-                  navigation.push("WorldPage", { mundo: item.id });
-                }}
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id}
-        />
-        {/* <Divider style={{height:100}}/> */}
       </View>
     </SafeAreaView>
   );
