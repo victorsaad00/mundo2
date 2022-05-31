@@ -28,22 +28,7 @@ import AppBar from "./src/Themes/Components/AppBar/AppBar";
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
-
-  const card_1 = {
-    world: "Mundo l",
-    name_world: "Ilha Lovelace",
-    progress: [5, 10],
-    description:
-      "Continue junto com Fisher para ajudá-lo a criar o dispositivo Defender.",
-    status: true,
-  };
-
-  const card_2 = {
-    world: "Mundo ll",
-    name_world: "Penhasco de Turing",
-    status: false,
-  };
-
+  
   const levelcard = {
     mapName: "Entrada da doca",
     description:
@@ -64,20 +49,20 @@ export default function App() {
   } else {
     return (
       <PaperProvider theme={TravelersTheme}>
-      {/*<View
+      {/* <View
           style={{
-            height: 700 ,
+            height: "100%",
             width: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: 'yellow'
+            backgroundColor: 'white'
           }}
         >
-          <Game />
           
-        
-        </View>*/}
+          
+        </View> */}
+        {/* <Game /> */}
         {/* <CustomerPage /> */}
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
