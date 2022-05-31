@@ -40,7 +40,9 @@ const LoginPage = (props) => {
         setPasswordError(true);
         return;
       } else {
-        await AsyncStorage.setItem("@user", JSON.stringify(user));
+        await AsyncStorage.setItem("@userInfo", JSON.stringify(user));
+        await AsyncStorage.setItem("@auth", "Autenticado");
+
         navigation.navigate("Home");
       }
     } catch (error) {
@@ -110,9 +112,6 @@ const LoginPage = (props) => {
                       armor: ["1"],
                       shoes: ["1"],
                       weapon: [],
-                      eyesColors: ["blue","brown","gray","green","red"],
-                      hairsColors: ["azul","brown","loiro","preto"],
-                      skinsColors: ["amarelada","branca","parda","preta"],
                     },
                     cash: 0
                   },
@@ -127,6 +126,7 @@ const LoginPage = (props) => {
                   }
                 }
               ))
+              await AsyncStorage.setItem("@auth", "");
             }
             navigation.navigate("Home");
           }}

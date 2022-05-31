@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, TextInput, useTheme } from "react-native-paper";
 import Input from "../../Themes/Components/Input/Input";
@@ -6,12 +6,13 @@ import Button from "../../Themes/Components/Button/Button";
 import { View } from "../../components/Themed";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Alert from "@root/components/Alert"
 
 import axios from "axios";
 
 const UpdateUserInformation = () => {
   const navigation = useNavigation();
-  const [visible, setVisible] = useState(false);
+  
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -19,40 +20,93 @@ const UpdateUserInformation = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [incorrectPassword, setIncorrectPassword] = useState(false);
 
+  const [userConfig,setUserConfig] = useState({})
+
   const { colors } = useTheme();
 
-  const hideDialog = () => setVisible(false);
+  const [visible, setVisible] = useState(false);
+  const hideDialog = () => {setVisible(false)};
+
+  const [titleAlert,setTitleAlert] = useState("");
+  const [descriptionAlert,setDescriptionAlert] = useState("");
+
 
   const setEmptyField = () => {
-    setEmail("");
-    setName("");
     setPassword("");
     setConfirmPassword("");
     setIncorrectPassword(false);
   };
 
-  const updateInformation = async () => {
+
+  const getUserInfo = async ()=>{
+    const raw_data = await AsyncStorage.getItem('@userInfo')
+    const user = JSON.parse(raw_data)
+
+    setUserConfig(user)
+    setName(user.name)
+  }
+  useEffect(() => {
+    getUserInfo()
+  },[])
+
+  const updateName = async () => {
     try {
-      let user = {
-        name: "",
-        password: "",
-        usedItems: undefined,
+
+      let user = {};
+
+      user = {
+        email: userConfig.email,
+        name: name,
       };
+
+      let authUser ={ ...userConfig}
+      authUser.name = name;
+      // console.log(authUser)
+
+      await AsyncStorage.setItem('@userInfo', JSON.stringify(authUser))
+
+
+      axios.post("http://10.0.2.2:3000/updateUser", user).then(response=>{
+        console.log("Nome atualizado")
+
+        setTitleAlert("Nome atualizado!")
+        setDescriptionAlert("Seu nome foi atualizado com sucesso")
+
+        setVisible(true);
+
+      });
+
+      //console.log(response.data);
+      setEmptyField();
+    } catch (error) {
+      console.log(error)
+      console.log(error.response);
+    }
+  }
+
+  const updatePassword = async () => {
+    try {
+      let user = {};
 
       if (password !== confirmPassword) {
         setIncorrectPassword(true);
         return;
       }
 
-      const authUser = JSON.parse(await AsyncStorage.getItem("@user"));
+      const raw_data = await AsyncStorage.getItem("@userInfo");
+      let authUser = JSON.parse(raw_data)
 
       user = {
         email: authUser.email,
-        name: name,
         password: password,
       };
 
-      await axios.post("http://10.0.2.2:3000/updateUser", user);
+      axios.post("http://10.0.2.2:3000/updateUser", user).then(response=>{
+        console.log("Senha atualizada")
+
+        // setVisible(true);
+      });
+
 
       //console.log(response.data);
       setEmptyField();
@@ -64,12 +118,10 @@ const UpdateUserInformation = () => {
   return (
     <SafeAreaView>
       <Appbar>
-        <Appbar.BackAction
-          color={colors.surface}
-          onPress={() => navigation.goBack("Login")}
-        />
+        <Appbar.BackAction color="white" onPress={()=> navigation.goBack()} />
         <Appbar.Content color={colors.surface} title="Alterar informações" />
       </Appbar>
+      <Alert infoCard={{title:titleAlert,description:descriptionAlert}} visible={visible} hideDialog={hideDialog} />
       <View
         justifyContent="space-around"
         alignItems="center"
@@ -82,6 +134,7 @@ const UpdateUserInformation = () => {
           value={name}
           onChangeText={(text) => setName(text)}
         />
+        <Button onClick={updateName}>Mudar nome</Button>
         <Input
           label="Senha"
           secureTextEntry={true}
@@ -102,7 +155,7 @@ const UpdateUserInformation = () => {
           onChangeText={(text) => setConfirmPassword(text)}
         />
 
-        <Button onClick={updateInformation}>Confirmar</Button>
+        <Button onClick={updatePassword}>Confirmar</Button>
       </View>
     </SafeAreaView>
   );

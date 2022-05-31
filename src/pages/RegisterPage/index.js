@@ -70,33 +70,34 @@ const RegisterPage = (props) => {
       };
 
       const items = {
-        cash: 0,
-        skins: {
-          head: [],
-          armor: [],
-          feet: [],
+        skins:{
+          head: ["1"],
+          armor: ["1"],
+          shoes: ["1"],
+          weapon: [],
         },
+        cash: 0
       };
 
       console.log(email);
       if (email === "") {
-        console.log("EMAIL VAZIO CARAIO");
+        console.log("EMAIL VAZIO ");
         return;
       }
 
       if (name === "") {
-        console.log("NOME VAZIO PORRA");
+        console.log("NOME VAZIO");
 
         return;
       }
 
       if (password === "") {
-        console.log("SENHA CARAI");
+        console.log("SENHA VAZIA");
         return;
       }
 
       if (password !== confirmPassword) {
-        console.log("ARROCHOU A SENHA ERRADA");
+        console.log("CONFIRMAÇÃO DA SENHA ERRADA");
 
         return;
       }
@@ -105,8 +106,27 @@ const RegisterPage = (props) => {
         name: name,
         email: email,
         password: password,
-        usedItems: usedItems,
-        items: items,
+        fase: 0,
+        world: 1,
+        experience: 0,
+        items: {
+          skins:{
+            head: ["1"],
+            armor: ["1"],
+            shoes: ["1"],
+            weapon: [],
+          },
+          cash: 0
+        },
+        user_styles:{
+          eyeColor: "blue",
+          genre: 'male',
+          hairColor: 'brown',
+          head: '2',
+          skinColor: 'branca',
+          armor: "1",
+          shoes: "1"
+        }
       };
       //return user;
       //sendUser(user);
@@ -115,6 +135,7 @@ const RegisterPage = (props) => {
 
       console.log(response.data);
       setEmptyField();
+      navigation.goBack()
     } catch (error) {
       console.log(error.response);
     }

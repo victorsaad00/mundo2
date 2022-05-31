@@ -8,12 +8,11 @@ import { View } from "../../components/Themed";
 import Alert from "../../components/Alert";
 import HomePage from "../HomePage"
 import DiarioPage from "../DiarioPage";
+import UpdateUserPage from "../updateUserInformation"
 
 const HomePageBottom = () => <HomePage />;
 
 const AlbumsRoute = () => <DiarioPage />;
-
-const RecentsRoute = () => <Text>Recents</Text>;
 
 const BottomHomePage = (props) => {
   const { colors } = useTheme();
@@ -22,13 +21,11 @@ const BottomHomePage = (props) => {
   const [routes] = React.useState([
     { key: 'home', title: 'Home', icon: 'home' },
     { key: 'diario', title: 'Diário', icon: 'book' },
-    { key: 'settings', title: 'Configurações', icon: 'account' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomePageBottom,
     diario: AlbumsRoute,
-    settings: RecentsRoute,
   });
 
   return (
