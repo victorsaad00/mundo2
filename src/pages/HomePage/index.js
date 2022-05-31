@@ -26,8 +26,6 @@ const HomePage = (props) => {
   const { colors } = useTheme();
 
   const [retrieve, setRetrieve] = useState(false);
-  const [worldInfo,setWorldInfo] = useState([]);
- 
   const [worldInfo, setWorldInfo] = useState([]);
 
   const navigation = useNavigation();
@@ -74,6 +72,16 @@ const HomePage = (props) => {
           color={colors.surface}
           icon="brush"
           onPress={() => navigation.push("Visual")}
+        />
+        <Appbar.Action
+          color={colors.surface}
+          icon="cog-outline"
+          onPress={() => navigation.push("UpdatePage")}
+        />
+        <Appbar.Action
+          color={colors.surface}
+          icon="cart"
+          onPress={() => navigation.push("StorePage")}
         />
       </Appbar>
 

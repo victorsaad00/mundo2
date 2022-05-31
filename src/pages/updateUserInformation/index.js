@@ -4,8 +4,8 @@ import { Appbar, TextInput, useTheme } from "react-native-paper";
 import Input from "../../Themes/Components/Input/Input";
 import Button from "../../Themes/Components/Button/Button";
 import { View } from "../../components/Themed";
-import Alert from "../../components/Alert";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import axios from "axios";
 
@@ -35,40 +35,26 @@ const UpdateUserInformation = () => {
     try {
       let user = {
         name: "",
-        email: "",
         password: "",
         usedItems: undefined,
       };
-
-      console.log(email);
-      if (email === "") {
-        setEmail(email);
-      }
-
-      if (name === "") {
-        setName(name);
-      }
-
-      if (password === "") {
-        setPassword(password);
-      }
 
       if (password !== confirmPassword) {
         setIncorrectPassword(true);
         return;
       }
 
+      const authUser = JSON.parse(await AsyncStorage.getItem("@user"));
+
       user = {
+        email: authUser.email,
         name: name,
-        email: email,
         password: password,
       };
-      const response = await axios.post(
-        "http://10.0.2.2:3000/updateUser",
-        user
-      );
 
-      console.log(response.data);
+      await axios.post("http://10.0.2.2:3000/updateUser", user);
+
+      //console.log(response.data);
       setEmptyField();
     } catch (error) {
       console.log(error.response);
@@ -90,51 +76,33 @@ const UpdateUserInformation = () => {
         style={{ height: 600 }}
       >
         <Input
-          label="Digite seu E-mail"
-          keyboardType="email-address"
+          label="Nome"
           variant="outlined"
           size="expansive"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
+        <Input
+          label="Senha"
+          secureTextEntry={true}
+          variant="outlined"
+          size="expansive"
+          value={password}
+          right={<TextInput.Icon name="eye-off-outline" />}
+          onChangeText={(text) => setPassword(text)}
+        />
+        <Input
+          label="Confirmar Senha"
+          secureTextEntry={true}
+          variant="outlined"
+          size="expansive"
+          value={confirmPassword}
+          errpr={incorrectPassword}
+          right={<TextInput.Icon name="eye-off-outline" />}
+          onChangeText={(text) => setConfirmPassword(text)}
         />
 
-        {/* Só habilita se o email tiver sido preenchido por causa do backend */}
-        {email && (
-          <>
-            <Input
-              label="Nome"
-              variant="outlined"
-              size="expansive"
-              value={name}
-              onChangeText={(text) => setName(text)}
-            />
-            <Input
-              label="Senha"
-              secureTextEntry={true}
-              variant="outlined"
-              size="expansive"
-              value={password}
-              right={<TextInput.Icon name="eye-off-outline" />}
-              onChangeText={(text) => setPassword(text)}
-            />
-            <Input
-              label="Confirmar Senha"
-              secureTextEntry={true}
-              variant="outlined"
-              size="expansive"
-              value={confirmPassword}
-              errpr={incorrectPassword}
-              right={<TextInput.Icon name="eye-off-outline" />}
-              onChangeText={(text) => setConfirmPassword(text)}
-            />
-          </>
-        )}
-
-        <Button onClick={updateInformation} disabled={email}>
-          Confirmar
-        </Button>
-
-        <Alert infoCard={alertCard} hidedialog={hideDialog} visible={visible} />
+        <Button onClick={updateInformation}>Confirmar</Button>
       </View>
     </SafeAreaView>
   );

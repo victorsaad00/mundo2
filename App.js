@@ -26,10 +26,11 @@ import Game from "./src/components/Game/Game";
 import RegisterPage from "./src/pages/RegisterPage";
 import AppBar from "./src/Themes/Components/AppBar/AppBar";
 import UpdateUserInformation from "./src/pages/updateUserInformation";
+import StorePage from "./src/pages/StorePage";
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
-  
+
   const levelcard = {
     mapName: "Entrada da doca",
     description:
@@ -50,8 +51,7 @@ export default function App() {
   } else {
     return (
       <PaperProvider theme={TravelersTheme}>
-
-       {/*<View
+        {/*<View
           style={{
             height: "100%",
             width: "100%",
@@ -91,6 +91,16 @@ export default function App() {
             <Stack.Screen
               name="RegisterPage"
               component={RegisterPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="UpdatePage"
+              component={UpdateUserInformation}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="StorePage"
+              component={StorePage}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
