@@ -94,6 +94,9 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
+              name="Game"
+              component={Game}
+
               name="UpdatePage"
               component={UpdateUserInformation}
               options={{ headerShown: false }}

@@ -24,7 +24,7 @@ const CommandLevel3 = ({engine,passos,captured,itemPathTaked,minutes,seconds,...
                             Time:
                         </Text>
                         <Text size="small">
-                            {`${minutes}:${seconds}`}
+                            {`${("00" + minutes).slice(-2)}:${("00" + seconds).slice(-2)}`}
                         </Text>
                     </View>
                     <View style={{flexDirection:"row",paddingVertical: 16}}>
@@ -45,7 +45,7 @@ const CommandLevel3 = ({engine,passos,captured,itemPathTaked,minutes,seconds,...
                     
                 </View>
                 
-                <View style={{flex:1,justifyContent: 'flex-start'}}>
+                <View style={{flex:1,justifyContent: 'flex-start',height:325}}>
                     <View style={{alignItems: 'center'}}>
                         <IconButton
                             icon="arrow-up"

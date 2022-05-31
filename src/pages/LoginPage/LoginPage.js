@@ -94,7 +94,40 @@ const LoginPage = (props) => {
           mode="flat"
           size="medium"
           style={{ width: "100%" }}
-          onClick={() => {
+          onClick={async () => {
+            let userInfo = await AsyncStorage.getItem('@userInfo')
+            // Primeria vez
+            if (userInfo === null){
+              await AsyncStorage.setItem('@userInfo', JSON.stringify(
+                { // Fazer visuais padroes
+                  name: "Viajante",
+                  fase: 0,
+                  world: 1,
+                  experience: 0,
+                  items: {
+                    skins:{
+                      head: ["1"],
+                      armor: ["1"],
+                      shoes: ["1"],
+                      weapon: [],
+                      eyesColors: ["blue","brown","gray","green","red"],
+                      hairsColors: ["azul","brown","loiro","preto"],
+                      skinsColors: ["amarelada","branca","parda","preta"],
+                    },
+                    cash: 0
+                  },
+                  user_styles:{
+                    eyeColor: "blue",
+                    genre: 'male',
+                    hairColor: 'brown',
+                    head: '2',
+                    skinColor: 'branca',
+                    armor: "1",
+                    shoes: "1"
+                  }
+                }
+              ))
+            }
             navigation.navigate("Home");
           }}
         >

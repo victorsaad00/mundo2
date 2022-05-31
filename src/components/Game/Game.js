@@ -1,4 +1,4 @@
-import {AppRegistry,StyleSheet,ImageBackground, Dimensions, ScrollView, FlatList  } from 'react-native';
+import {AppRegistry,StyleSheet,ImageBackground, Dimensions, ScrollView, FlatList, DeviceEventEmitter  } from 'react-native';
 import { IconButton, useTheme,Appbar } from 'react-native-paper'
 
 import { GameEngine } from "react-native-game-engine";
@@ -7,6 +7,7 @@ import Character from './Character';
 import Item from './Item';
 import ItemImage from './ItemImage';
 import ColorsMatrix from './ColorsMatrix'
+import ActiveCrystal from './ActiveCrystal'
 import { GameLoop1 } from './GameLoop';
 
 import CommandsLevel1 from './CommandsLevel1';
@@ -15,14 +16,61 @@ import CommandsLevel3 from './CommandsLevel3';
 import CommandsLevel4 from './CommandsLevel4';
 import CommandsLevel5 from './CommandsLevel5';
 
+import InfoFase from '@root/assets/level/info.json';
+
+import AlertInfo from '../AlertInfo';
+import AlertLevelComplete from '../AlertLevelComplete';
+
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Text from "../../Themes/Components/Text/Text";
 
 import { View } from "../../components/Themed";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useNavigation } from "@react-navigation/native";
+
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+const initialConfigLevels = {
+    1: {
+        "name": "Floresta inicial",
+        "minutes": 1,
+        "seconds": 0,
+        "passos": 100,
+        'numberToCapture': 3
+    },
+    2: {
+        "name": "Lago Bin",
+        "minutes": 2,   
+        "seconds": 30,
+        "passos": 100,
+        'numberToCapture': 6
+    },
+    3: {
+        "name": "As Montanhas Hilbert",
+        "minutes": 1,
+        "seconds": 0,
+        "passos": 75,
+        'numberToCapture': 1
+    },
+    4: {
+        "name": "Rupturas rochosas",
+        "minutes": 2,
+        "seconds": 30,
+        "passos": 50,
+        'numberToCapture': 10
+    },
+    5: {
+        "name": "Cidade Lovelace",
+        "minutes": 3,
+        "seconds": 0,
+        "passos": 60,
+        'numberToCapture': 1
+    },
+}
+
+
 
 const matrixLevel1 = () => {
     let matrixLevel = Array(10).fill().map(()=>Array(10).fill(0))
@@ -100,6 +148,18 @@ const matrixLevel5 = () => {
         matrixLevel[15][internal[i]] = 1
     }
 
+    matrixLevel[6][4] = 2
+    matrixLevel[6][5] = 2
+
+    matrixLevel[6][14] = 3
+    matrixLevel[6][15] = 3
+
+    matrixLevel[13][4] = 4
+    matrixLevel[13][5] = 4
+
+    matrixLevel[13][14] = 5
+    matrixLevel[13][15] = 5
+
     return matrixLevel
 }
 const selectMatrix = {
@@ -111,16 +171,17 @@ const selectMatrix = {
 }
 
 const selectCommand = {
-    1: (engine,passos,captured,itemPathTaked,minutes,seconds) => <CommandsLevel1 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds}/>,
-    2: (engine,passos,captured,itemPathTaked,minutes,seconds) => <CommandsLevel2 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds}/>,
-    3: (engine,passos,captured,itemPathTaked,minutes,seconds) => <CommandsLevel3 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds}/>,
-    4: (engine,passos,captured,itemPathTaked,minutes,seconds) => <CommandsLevel4 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds}/>,
-    5: (engine,passos,captured,itemPathTaked,minutes,seconds) => <CommandsLevel5 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds}/>,
+    1: (engine,passos,captured,itemPathTaked,minutes,seconds,number_movements,barconfig) => <CommandsLevel1 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds} number_movements={number_movements}/>,
+    2: (engine,passos,captured,itemPathTaked,minutes,seconds,number_movements,barconfig) => <CommandsLevel2 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds} number_movements={number_movements}/>,
+    3: (engine,passos,captured,itemPathTaked,minutes,seconds,number_movements,barconfig) => <CommandsLevel3 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds} number_movements={number_movements}/>,
+    4: (engine,passos,captured,itemPathTaked,minutes,seconds,number_movements,barconfig) => <CommandsLevel4 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds} number_movements={number_movements}/>,
+    5: (engine,passos,captured,itemPathTaked,minutes,seconds,number_movements,barconfig) => <CommandsLevel5 engine={engine} passos={passos} captured={captured} itemPathTaked={itemPathTaked} minutes={minutes} seconds={seconds} number_movements={number_movements} barconfig={barconfig}/>,
 }
 
 const Level = (props) => {
     const { colors } = useTheme();
     const [id,setId] = useState(1)
+    const route = useRoute();
 
     const pathLevels = { 
         1: require("@root/assets/level/Fase_1/Fase_1.png"),
@@ -130,30 +191,54 @@ const Level = (props) => {
         5: require("@root/assets/level/Fase_5/Fase_5.png")
     }
 
-    const level = 5;
+    const [showHistory,setShowHistory] = useState(true);
+    const [showOrientation,setShowOrientation] = useState(false);
+    const [showEnd,setShowEnd] = useState(false);
+    const [showBadEnd, setShowBadEnd] = useState(false);
 
-    const number_movements = 30;
+    const level = route.params.level;
 
-    const [ minutes, setMinutes ] = useState(0);
-    const [seconds, setSeconds ] =  useState(15);
+    const number_movements = initialConfigLevels[level].passos;
+    const limitcaptured = initialConfigLevels[level].numberToCapture;
+
+    const [ minutes, setMinutes ] = useState(initialConfigLevels[level].minutes);
+    const [seconds, setSeconds ] =  useState(initialConfigLevels[level].seconds);
+
+    const [captured, setCaptured] = useState(0)
+
+
+    const [passos,setPassos] = useState(0);
+
+    const [startLevel,setStartLevel] = useState(false)
+
+    const [fimFase,setFimfase] = useState(false);
+
+
     useEffect(()=>{
-        let myInterval = setInterval(() => {
+        if (startLevel){
+            let myInterval = setInterval(() => {
+    
                 if (seconds > 0) {
                     setSeconds(seconds - 1);
                 }
                 if (seconds === 0) {
                     if (minutes === 0) {
+                        
                         clearInterval(myInterval)
-                        fimDeJogo();
+                        if (!fimFase){
+                            fimDeJogo("RUIM");
+                        }
+                        
                     } else {
+    
                         setMinutes(minutes - 1);
                         setSeconds(59);
+                        
                     }
                 } 
             }, 1000)
-            return ()=> {
-                clearInterval(myInterval);
-            };
+            return () => {clearInterval(myInterval)};
+        }
     });
 
     const [matrixLevel,setMatrixLevel] = useState([])
@@ -164,54 +249,86 @@ const Level = (props) => {
         
     },[])
 
-    const [captured, setCaptured] = useState(0)
-
-    const [passos,setPassos] = useState(0);
 
     const [xAxis,setXAxis] = useState(1) 
     const [yAxis,setYAxis] = useState(1) 
-
-    const [pilhaCommands,setPilhaCommands] = useState([])
-
-    
 
     const boardSize = 21*18;
     const [engine,setEngine] = useState(null);
 
     const  addCommand = (newCommand) => {
         setPassos(passos + 1)
-        console.log(xAxis)
+
     }
   
     useEffect( () => {
-        if (captured === 6){
-            fimDeJogo()
+        if (captured === limitcaptured){
+            fimDeJogo('BOM')
         }
     }, [captured])
 
-    useEffect(() => {
+    const [crystal1,setCrystal1] = useState(false);
+    const [crystal2,setCrystal2] = useState(false);
+    const [crystal3,setCrystal3] = useState(false);
+    const [crystal4,setCrystal4] = useState(false);
+    const [countCrystal, setCountCrystal] = useState(0)
 
-    })
+    useEffect( () => {
+        if (countCrystal === 4){
+            fimDeJogo('BOM')
+        }
+    }, [countCrystal])
 
-    const fimDeJogo = () => {
-        console.log('fim de jogo!')
+    const fimDeJogo = async (tipo) => {
+        engine.stop()
+        switch(tipo){
+            case "BOM":
+                setShowEnd(true);
+                setFimfase(true);
+                let rawData = await AsyncStorage.getItem('@userInfo')
+                let userInfo = JSON.parse(rawData)
+
+                if (userInfo.fase < level){
+                    userInfo.fase = level 
+                }
+
+                if (level === 1 && !(5 in userInfo.items.skins.armor)){
+                    userInfo.items.skins.armor.push(5)
+                }
+                
+                userInfo.experience += InfoFase[level.toString()].experience
+                userInfo.items.cash += InfoFase[level.toString()].gold
+
+                
+                await AsyncStorage.setItem('@userInfo', JSON.stringify(userInfo))
+
+                // Update here with is auth
+                const auth = await AsyncStorage.getItem('@auth')
+                if (auth === "Autenticado"){
+                    // TO DO
+                }
+                break;
+            case "RUIM":
+                setShowBadEnd(true);
+                break;
+        }
     }
 
     
   
 
-    // const navigation = useNavigation();
+    const navigation = useNavigation();
 
     const configLevel = {
         1: {
             config: {matrix: matrixLevel,collected:0,limitPassos:number_movements,level: 1},
-            item1: {position: [17,3],color:"yellow",
-                size: 18,renderer: Item},
-            item2: {position: [5,15],color:"yellow",
-                size: 18,renderer: Item},
-            item3: {position: [13,13],color:"yellow",
-                size: 18,renderer: Item},
-            char: {position: [xAxis,yAxis],updateFrequency:32,nextMove:10,passos:0,
+            item1: {position: [17,3],path:require("@root/assets/level/Fase_1/pa.png"),
+                size: 18,renderer: ItemImage},
+            item2: {position: [5,15],path:require("@root/assets/level/Fase_1/balde.png"),
+                size: 18,renderer: ItemImage},
+            item3: {position: [13,13],path:require("@root/assets/level/Fase_1/vara_pesca.png"),
+                size: 18,renderer: ItemImage},
+            char: {position: [xAxis,yAxis],updateFrequency:16,nextMove:10,passos:0,
                 size: 18, x_vel:0,y_vel:0,renderer: Character},
         },
         2: {
@@ -228,12 +345,12 @@ const Level = (props) => {
                 size: 18,renderer: ItemImage},
             door3: {position: [3,7],path:require("@root/assets/level/Fase_2/Tabua_X_tampa.png"),
                 size: 18,renderer: ItemImage},
-            char: {position: [xAxis,yAxis],updateFrequency:32,nextMove:10,passos:0,
+            char: {position: [xAxis,yAxis],updateFrequency:16,nextMove:10,passos:0,
                 size: 18, x_vel:0,y_vel:0,renderer: Character},
         },
         3: {
             config: {matrix: matrixLevel,colorChoosed:0,limitPassos:number_movements,level: 3},
-            char: {position: [xAxis,yAxis],updateFrequency:32,nextMove:10,passos:0,
+            char: {position: [xAxis,yAxis],updateFrequency:16,nextMove:10,passos:0,
                 size: 18, x_vel:0,y_vel:0,renderer: Character},
         },
 
@@ -291,10 +408,61 @@ const Level = (props) => {
     return (
         <SafeAreaView>
             <Appbar>
-                <Appbar.Content color={colors.surface} title="Olá, Joe Doe" />
+                <Appbar.BackAction color="white" onPress={()=> navigation.goBack()} />
+                <Appbar.Content color={colors.surface} title={initialConfigLevels[level].name} />
             </Appbar>
+            <AlertInfo visible={showHistory} hidedialog={()=>{
+                setShowHistory(false)
+                setShowOrientation(true)
+            }} 
+                infoCard={{
+                    'mapName': initialConfigLevels[level].name,
+                    'type': 'História',
+                    'description': InfoFase[level.toString()].description_historia
+                }} />
+            <AlertInfo visible={showOrientation} hidedialog={()=>{
+                setShowOrientation(false)
+                setStartLevel(true)
+            }} 
+                infoCard={{
+                    'mapName': initialConfigLevels[level].name,
+                    'type': 'Orientação',
+                    'description': InfoFase[level.toString()].description_fase
+                }} />
+
+            <AlertLevelComplete visible={showEnd} hidedialog={()=>{
+                setShowEnd(false)
+            }} 
+                buttonOnClick={()=>{
+                    setShowEnd(false)
+                    DeviceEventEmitter.emit("updateData", {});
+                    navigation.goBack()
+                }}
+                infoCard={{
+                    'mapName': initialConfigLevels[level].name,
+                    'description': InfoFase[level.toString()].ending_good,
+                    'experience': InfoFase[level.toString()].experience,
+                    'reward': `${InfoFase[level.toString()].gold} goldcoins`,
+                    'lock': InfoFase[level.toString()].lock
+                }} />
+            <AlertLevelComplete visible={showBadEnd} hidedialog={()=>{
+                setShowBadEnd(false)
+            }} 
+                title="Desafio incompleto"
+                buttonOnClick={()=>{
+                    setShowEnd(false)
+                    navigation.goBack()
+                }}
+                infoCard={{
+                    'mapName': initialConfigLevels[level].name,
+                    'description': InfoFase[level.toString()].ending_bad,
+                    'experience': 0,
+                    'reward': "Sem recompensa",
+                    'lock': []
+                }} />
+            
             <ScrollView>
-                <View style={{height:800}}>
+                <View style={{height:900}}>
             
                     <View style={styles.container}>
                         <ImageBackground source={pathLevels[level]} resizeMode='stretch'
@@ -309,6 +477,10 @@ const Level = (props) => {
                             backgroundColor: "yellow"
                         }} />
                         {level == 3 ? <ColorsMatrix  matrix={matrixLevel} /> : <View />}
+                        {level == 5 ? <ActiveCrystal x={9} y={8}  actived={crystal1} path={require("@root/assets/level/Fase_5/Crystal_actived.png")} /> : <View />}
+                        {level == 5 ? <ActiveCrystal x={29} y={8}  actived={crystal2} path={require("@root/assets/level/Fase_5/Crystal_actived.png")} /> : <View />}
+                        {level == 5 ? <ActiveCrystal x={9} y={30}  actived={crystal3} path={require("@root/assets/level/Fase_5/Crystal_actived.png")} /> : <View />}
+                        {level == 5 ? <ActiveCrystal x={29} y={30}  actived={crystal4} path={require("@root/assets/level/Fase_5/Crystal_actived.png")} /> : <View />}
                         {matrixLevel.length === 0 ? <View /> : 
                         <GameEngine
                             ref={(ref)=> {setEngine(ref)}}
@@ -333,15 +505,36 @@ const Level = (props) => {
                                         }
                                         return;
                                     case 'game-over':
-                                        fimDeJogo()
+                                        fimDeJogo("BOM")
+                                        return;
+                                    case "bad-game-over":
+                                        fimDeJogo("RUIM");
+                                        return;
+                                    case 'crystal1':
+                                        setCrystal1(true)
+                                        setCountCrystal(countCrystal +1)
+                                        return;
+                                    case 'crystal2':
+                                        setCrystal2(true)
+                                        setCountCrystal(countCrystal +1)
+                                        return;
+                                    case 'crystal3':
+                                        setCrystal3(true)
+                                        setCountCrystal(countCrystal +1)
+                                        return;
+                                    case 'crystal4':
+                                        setCrystal4(true)
+                                        setCountCrystal(countCrystal +1)
+                                        return;
                                   }
                             }}
                         >
 
                         </GameEngine>}
-                        
                     </View>
-                    {selectCommand[level](engine,passos,captured,itemPathTaked,minutes,seconds)}
+                    {/* <Button onClick={()=>{fimDeJogo('BOM')}}>acaba</Button> */}
+                    {/* <Button onClick={()=>{fimDeJogo('RUIM')}}>acaba ruim</Button> */}
+                    {selectCommand[level](engine,passos,captured,itemPathTaked,minutes,seconds,number_movements,countCrystal)}
                 </View>
             </ScrollView>
         

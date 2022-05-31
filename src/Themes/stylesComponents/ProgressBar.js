@@ -14,9 +14,7 @@ const progressBar = StyleSheet.create({
     },
     actualProgress: {
         height: 35,
-        backgroundColor: Colors.primary[20],
         borderWidth: 1,
-        borderColor: Colors.primary[10],
         borderRadius: 20,
         
     },

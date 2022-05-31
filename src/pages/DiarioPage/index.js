@@ -1,7 +1,7 @@
-import React, {useEffect,useState} from "react";
+import React, {useEffect,useState,useCallback} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, TextInput, useTheme, Divider, BottomNavigation, List } from "react-native-paper";
-import {FlatList, ScrollView } from 'react-native'
+import {FlatList, ScrollView, ActivityIndicator,RefreshControl } from 'react-native'
 import Input from "../../Themes/Components/Input/Input";
 import Button from "../../Themes/Components/Button/Button";
 import Text from "../../Themes/Components/Text/Text";
@@ -10,6 +10,7 @@ import AlertDiario from "../../components/AlertDiario";
 
 import { NavigationContainer,useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import infoMundo from "@root/assets/Diario/Mundo_1/info.json";
 
@@ -22,7 +23,15 @@ const DiarioPage = (props) => {
   const [infoShow,setInfoShow] = useState({});
   const [visible,setVisible] = useState(false);
 
-  const number_fases = 5;
+  const [numberFases,setNumberFases] = useState(0);
+
+
+  const getNumberFases = async()=>{
+    const raw_data = await AsyncStorage.getItem('@userInfo')
+    const user = JSON.parse(raw_data)
+
+    setNumberFases(user.fase)
+  }
 
   // const availableLevels = infoMundo.slice(0,number_fases);
 
@@ -33,7 +42,7 @@ const DiarioPage = (props) => {
   useEffect(() => {
     let firstLevel = [];
     for (let i=0;i<10; i++){
-      if (i< number_fases){
+      if (i< numberFases){
         firstLevel.push(infoMundo[i])
       }else {
         firstLevel.push({
@@ -44,7 +53,7 @@ const DiarioPage = (props) => {
       }
     }
     setLevels(firstLevel);
-  },[])
+  },[numberFases])
 
   useEffect(() => {
     let firstLevel = [];
@@ -57,6 +66,25 @@ const DiarioPage = (props) => {
     }
     setDefaultLevels(firstLevel);
   },[])
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => {
+      setRefreshing(false)
+    });
+  }, []);
+
+  useEffect(() => {
+    if( refreshing == false){
+      getNumberFases()
+    }
+  },[refreshing])
     
  
   return (
@@ -67,51 +95,56 @@ const DiarioPage = (props) => {
       </Appbar>
 
       <AlertDiario visible={visible} hidedialog={()=>{setVisible(false)}} infoCard={infoShow} />
-
-      <ScrollView>
-      <View style={{marginBottom: 128}}>
-        <List.Accordion
-          title="Mundo l - Ilha lovelace"
-          left={props => <List.Icon {...props} icon="book-open-outline" />}>
-          {levels.map(item => <List.Item left={props => {
-            if (item.description === false){
-              return <List.Icon {...props} icon="lock-outline" />
-            } else {
-              return <List.Icon {...props} icon="pencil-outline" />
-            }
-          }} key={item.level} onPress={()=>{
-            setInfoShow({
-              "title": item.name,
-              "description": item.description
-            })
-            setVisible(true)
-          }} title={item.name} />)}
-        </List.Accordion>
-        <List.Accordion
-          title="Mundo ll - Penhasco de Turing"
-          left={props => <List.Icon {...props} icon="book-open-outline" />}>
-          {defaultlevels.map(item => <List.Item key={item.level} left={props => {
-            if (item.description === false){
-              return <List.Icon {...props} icon="lock-outline" />
-            } else {
-              return <List.Icon {...props} icon="pencil-outline" />
-            }
-          }} title={item.name} />)}
-        </List.Accordion>
-        <List.Accordion
-          title="Mundo lll - Floresta Conectada"
-          left={props => <List.Icon {...props} icon="book-open-outline" />}>
-          {defaultlevels.map(item => <List.Item key={item.level} left={props => {
-            if (item.description === false){
-              return <List.Icon {...props} icon="lock-outline" />
-            } else {
-              return <List.Icon {...props} icon="pencil-outline" />
-            }
-          }} title={item.name} />)}
-        </List.Accordion>
-      </View>
+      <ScrollView  refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
+            }>
+        <View style={{marginBottom: 128}}>
+          <List.Accordion
+            title="Mundo l - Ilha lovelace"
+            left={props => <List.Icon {...props} icon="book-open-outline" />}>
+            {levels.map(item => <List.Item  key={"1" + item.level} left={props => {
+              if (item.description === false){
+                return <List.Icon {...props} icon="lock-outline" />
+              } else {
+                return <List.Icon {...props} icon="pencil-outline" />
+              }
+            }} onPress={()=>{
+              setInfoShow({
+                "title": item.name,
+                "description": item.description
+              })
+              setVisible(true)
+            }} title={item.name} />)}
+          </List.Accordion>
+          <List.Accordion
+            title="Mundo ll - Penhasco de Turing"
+            left={props => <List.Icon {...props} icon="book-open-outline" />}>
+            {defaultlevels.map(item => <List.Item key={item.level} left={props => {
+              if (item.description === false){
+                return <List.Icon {...props} icon="lock-outline" />
+              } else {
+                return <List.Icon {...props} icon="pencil-outline" />
+              }
+            }} title={item.name} />)}
+          </List.Accordion>
+          <List.Accordion
+            title="Mundo lll - Floresta Conectada"
+            left={props => <List.Icon {...props} icon="book-open-outline" />}>
+            {defaultlevels.map(item => <List.Item key={item.level} left={props => {
+              if (item.description === false){
+                return <List.Icon {...props} icon="lock-outline" />
+              } else {
+                return <List.Icon {...props} icon="pencil-outline" />
+              }
+            }} title={item.name} />)}
+          </List.Accordion>
+        </View>
       
       </ScrollView>
+      
       
     </SafeAreaView>
   );

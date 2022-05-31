@@ -9,10 +9,13 @@ export default function ProgressBar(props) {
   const text_children = props.children;
   const progress = props.progress == 0 ? 0.05 : props.progress;
 
+  const colorBar = props.colorBar;
+  const colorBorderBar = props.colorBorderBar
+
   return desactived ? (
     <Desactivated_progress />
   ) : (
-    <Activated_progress progress={progress}>{text_children}</Activated_progress>
+    <Activated_progress colorBar={colorBar} colorBorderBar={colorBorderBar} progress={progress}>{text_children}</Activated_progress>
   );
 }
 
@@ -21,12 +24,15 @@ const Activated_progress = function (props) {
   const text_children = props.children;
   const progress = props.progress == 0 ? 0.05 : props.progress;
 
+  const colorBorderBar = props.colorBorderBar === undefined ? colors.primary : props.colorBorderBar;
+  const colorBar = props.colorBar === undefined ? colors.accent : props.colorBar;
+
   return (
     <View style={progressBar.viewProgress}>
       <View
         style={[
           progressBar.actualProgress,
-          { width: `${progress * 100}%`, color: "red" },
+          { width: `${progress * 100}%`, color: "red",backgroundColor: colorBar,borderColor: colorBorderBar,},
         ]}
       />
 
