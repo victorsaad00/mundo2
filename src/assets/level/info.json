@@ -1,0 +1,47 @@
+{
+    "1": {
+        "description_historia": "Meu dispositivo Defender quebrou e preciso consertá-lo, mas antes precisamos sair daqui. Preciso de sua ajuda para levar alguns equipamentos meus para um barco que possuo aqui próximo, você poderia me dar uma mãozinha?",
+        "description_fase":"Pegue as ferramentas de Fisher antes que o tempo acabe. Para se movimentar utilize as setas e para pegar as ferramentas clique no botão PEGAR",
+        "ending_good": "Sua ajuda foi bastante bem vinda. Creio que esteja cansado depois de carregar esses equipamentos, descanse um pouco. Irei precisar de você com as energias renovadas. Eu tenho uma roupa aqui de reserva, caso queira utilizar fique a vontade.",
+        "ending_bad": "Achava que você pudesse ser mais rápido Viajante...",
+        "experience": 10,
+        "gold": 2,
+        "lock": ["Roupa de pescador","Fase 'Lago Bin'"]
+    },
+    "2": {
+        "description_historia": "Há muitas histórias sobre o lago Bin, mas sou pescador há muito tempo e nunca vi nada sobre o que falam sobre. Entretanto, temos que estar precavidos, por isso fique atento para que não seja pego de surpresa.",
+        "description_fase":"Há Três buracos que precisam ser tampados antes que o barco afunde! Utilize as tampas que estão no mapa e carregue-as até o buracos que tem a forma da respectiva tampa",
+        "ending_good": "Nunca tinha visto nada parecido como aquela criatura. Acho que ela pode estar relacionada ao T-CHAKI. Fico agradecido por você estar comigo e conseguir espantá-la para longe de nós. Acho que sem você eu não estaria vivo agora. Não devo menos do que lhe oferecer essa quantia como agradecimento.",
+        "ending_bad": "Não esperavamos por essa criatura furar nosso barco, agora nos resta afundar...",
+        "experience": 20,
+        "gold": 5,
+        "lock": ["Fase: 'As Montanhas de Hilbert'"]
+    },
+    "3": {
+        "description_historia": "As Montanhas de Hilbert são bastante traiçoeiras, devemos ter cuidado para que uma pedra não caia em nossas cabeças! Devemos passar por aqui com cautela, utilizando as botas certas. Depois daqui acho que ficaremos mais seguros. Eu acho…",
+        "description_fase":"Chegue até o canto inferior direito do mapa antes que o tempo acabe e as pedras da Montanha Hilbert o esmague! Porém alguns caminho precisam de botas especiais para andar, utilize a cor específica do caminho como bota para conseguir se movimentar por ela.",
+        "ending_good": "Acho que aquelas pedras estavam correndo atrás de mim, muitas delas passaram muito perto. Corri bastante, estou sem fôlego agora. Mas vejo que você adquiriu uma nova habilidade!\nMuito bem viajante!!\nAcho que ela será bastante importante daqui em diante. Então a utilize.",
+        "ending_bad": "Infelizmente as pedras das montanhas desceram da montanha e tornou o caminho impossível de ser passado",
+        "experience": 35,
+        "gold": 10,
+        "lock": ["Fase 'Rupturas Rochosas'"]
+    },
+    "4": {
+        "description_historia": "Acho que estou quase conseguindo consertar o dispositivo Defender, foi bastante difícil mas acho que está quase lá. Mas eu preciso de uma matéria prima presente em algumas rochas aqui na redondeza para alimentar o dispositivo. Tenho uma ferramenta para ajudá-lo a encontrar, porém ele está com pouca carga, por isso deve ser utilizado com sabedoria. Você poderia recolher algumas para mim?",
+        "description_fase":"Você deverá coletar 10 rochas para Fisher no tempo definido, entretanto você terá número limitado de comandos que poderá utilizar. Para ajudar-lo há opção de repetir comandos de movimentação, assim será contabilizado como apenas um comando, utilize-o.",
+        "ending_good": "Agradeço muito a você, viajante, por essas amostras. Acho que com essa quantidade o Defender volte a funcionar. Vejo que há fumaça por perto, acho que estamos chegando à cidade finalmente. Você irá adorar as pessoas de lá.",
+        "ending_bad": "Não conseguiremos seguir adiante sem o Defender, infelizmente não podemos mais prosseguir",
+        "experience": 50,
+        "gold": 10,
+        "lock": ["Fase 'Cidade Lovelace'"]
+    },
+    "5": {
+        "description_historia": "Fisher:\nA cidade é um bom ambiente para nós descansar um pouco. Muitos dos moradores de lá podem nos orientar de como está o estado da ilha para que possamos fazer alguma coisa para que saia das mãos desses piratas! Vamos adiante!\n\nLacaio do pirata Mow:\nFisher seu Ingrato!\nResolveu ir contra as regras da ilha para ajudar essa variante desprezível, que decepção.\nAgora sofra as consequências de descumprir as regras!\nFisher:\nAcho que estamos apuros, viajante! Devemos cuidar desse subordinado do Mow e tornar a cidade livre desses piratas malditos! Utilize o Defender para lutar contra esse pirata e tenha cuidado que ele pode ter algumas armadilhas ao redor.",
+        "description_fase":"O lacaio do pirata Mow conquistou a cidade e desativou os cristais de proteção. Temos que ativar-los para que a cidade não seja totalmente destruida!",
+        "ending_good": "Viajante você salvou a cidade Lovelace! Não tenho palavras para agradecer. Tenho esperança que conseguiremos libertar essa cidade do pirata Mow. A cidade lhe agradeceu e deu essa recompensa para você.",
+        "ending_bad": "Viajante infelizmente não conseguimos libertar a cidade. Acho que tudo foi em vão...",
+        "experience": 75,
+        "gold": 15,
+        "lock": []
+    }
+}

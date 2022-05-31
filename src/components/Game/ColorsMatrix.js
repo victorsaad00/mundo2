@@ -14,7 +14,7 @@ import { array, object, string,number } from 'prop-types';
         const [propsMatrix,setPropsMatrix] = useState([])
 
         useEffect(() => {
-            console.log(matrix);
+
             let props_matrix = []
 
             for (let i = 0; i < matrix.length; i++){

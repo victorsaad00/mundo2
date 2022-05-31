@@ -6,11 +6,13 @@ const levelCompleteCard = StyleSheet.create({
         display: 'flex',
         height: 650,
         elevation: 10,
+        
       },
       titleStyle:{
         fontSize: 26,
         paddingTop: 16,
-        marginBottom: 0
+        marginBottom: 0,
+        
       },
       subtitleStyle:{
         fontSize: 24,
@@ -24,6 +26,7 @@ const levelCompleteCard = StyleSheet.create({
         fontSize: 20,
         lineHeight: 30,
         textAlign: 'justify',
+        height: "100%"
         
       },
       buttonStyle:{

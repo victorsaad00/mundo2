@@ -88,16 +88,46 @@ const GameLoop1 = (entities, {touches, dispatch, events}) => {
             entities.config.collected ++
             
             if (config.matrix[eixoX][eixoY] == 1){
-                item1.color= "transparent"
+                item1.path = undefined
             } else if (config.matrix[eixoX][eixoY] == 2) {
-                item2.color= "transparent"
+                item2.path = undefined
             } else if (config.matrix[eixoX][eixoY] == 3) {
-                item3.color= "transparent"
+                item3.path = undefined
             }
 
             config.matrix[eixoX][eixoY] = 0
             dispatch("taked")
         } 
+    }
+
+    const active_crystal = (events,i) => {
+        const eixoX = Math.floor(char.position[0]/2)
+        const eixoY = Math.floor(char.position[1]/2)
+
+        const value = config.matrix[eixoY][eixoX]
+
+        switch (value){
+            case 2: 
+                config.matrix[6][4] = 0
+                config.matrix[6][5] = 0
+                dispatch("crystal1")
+                break
+            case 3:
+                config.matrix[6][14] = 0
+                config.matrix[6][15] = 0
+                dispatch("crystal2")
+                break
+            case 4:
+                config.matrix[13][4] = 0
+                config.matrix[13][5] = 0
+                dispatch("crystal3")
+                break
+            case 5:
+                config.matrix[13][14] = 0
+                config.matrix[13][15] = 0
+                dispatch("crystal4")
+                break
+        }
     }
 
     const take_condition2 = (events,i) => {
@@ -111,18 +141,15 @@ const GameLoop1 = (entities, {touches, dispatch, events}) => {
                 // Condição de pegar o objeto
                 switch (value.prop){
                     case 1:
-                        console.log("Objeto 1 pego")
                         config.holding = 1
                         door1.path = undefined
                         
                         break
                     case 2: 
-                        console.log("Objeto 2 pego")
                         config.holding = 2
                         door2.path = undefined
                         break
                     case 3:
-                        console.log("Objeto 3 pego")
                         config.holding = 3
                         door3.path = undefined
                         break
@@ -137,17 +164,14 @@ const GameLoop1 = (entities, {touches, dispatch, events}) => {
                         // Condição de colocar o objeto
                         switch (value.prop){
                             case 1:
-                                console.log("Objeto 1 colocado")
                                 door1.position = hole1.position
                                 door1.path = require("@root/assets/level/Fase_2/Tabua_circle_tampa.png")
                                 break
                             case 2: 
-                                console.log("Objeto 2 colocado")
                                 door2.position = hole2.position
                                 door2.path = require("@root/assets/level/Fase_2/Tabua_square_tampa.png")
                                 break
                             case 3:
-                                console.log("Objeto 3 colocado")
                                 door3.position = hole3.position
                                 door3.path = require("@root/assets/level/Fase_2/Tabua_X_tampa.png")
                                 break
@@ -227,12 +251,20 @@ const GameLoop1 = (entities, {touches, dispatch, events}) => {
                 
                 
             } else if (events[i].type === 'take'){
-                take_condition3(events,i)
-                if (config.collected === 10){
-                    dispatch("game-over")
+                if(config.level === 5){
+                    active_crystal(events,i)
+                } else if (config.level === 1){
+                    take_condition1(events,i)
+                } else if (config.level === 2){
+                    take_condition2(events,i)
+                } else if (config.level === 4){
+                    take_condition3(events,i)
                 }
+                
             } else if (events[i].type === "changeColor"){
                 colorChoose(events,i)
+            } else if (events[i].type === "active-crystal"){
+                active_crystal(events,i)
             }
             
         }
@@ -249,7 +281,7 @@ const GameLoop1 = (entities, {touches, dispatch, events}) => {
                 char.y_vel = 0;
                 char.passos ++;
                 if (char.passos > config.limitPassos){
-                    dispatch("game-over")
+                    dispatch("bad-game-over")
                 }else{
                     dispatch("moved")
                 }

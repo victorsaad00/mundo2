@@ -91,6 +91,11 @@ export default function App() {
               component={RegisterPage}
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="Game"
+              component={Game}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
         </NavigationContainer> 
         {/* <WorldPage info_mundo={card_1}/> */}

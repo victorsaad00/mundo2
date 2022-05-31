@@ -8,53 +8,7 @@ import Text from "../../Themes/Components/Text/Text";
 
 const ColorChoose = ({size,...props}) => {
     const {  colors,colorchoose } = useTheme();
-    // const cores = [
-    //     {
-    //         id: 0,
-    //         cor: "#694C2F",
-    //         selected: false,
-    //     },
-    //     {
-    //         id: 1,
-    //         cor: "#71252B",
-    //         selected: false,
-    //     },
-    //     {
-    //         id: 2,
-    //         cor: "#254571",
-    //         selected: false,
-    //     },
-    //     {
-    //         id: 3,
-    //         cor: "#368610",
-    //         selected: false,
-    //     },
-    //     {
-    //         id: 4,
-    //         cor: "red",
-    //         selected: false,
-    //     },
-    //     {
-    //         id: 5,
-    //         cor: "red",
-    //         selected: false,
-    //     },
-    //     {
-    //         id: 6,
-    //         cor: "red",
-    //         selected: false,
-    //     },
-    //     {
-    //         id: 7,
-    //         cor: "red",
-    //         selected: false,
-    //     },
-    //     {
-    //         id: 8,
-    //         cor: "red",
-    //         selected: false,
-    //     },
-    // ]
+    
     const [cores,setCores] = React.useState(props.listItems);
     const [cor,stateCor] = props.state;
 

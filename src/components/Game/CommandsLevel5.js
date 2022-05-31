@@ -3,9 +3,10 @@ import { View } from "../Themed";
 import Text from "../../Themes/Components/Text/Text";
 import Button from '../../Themes/Components/Button/Button';
 import { IconButton,useTheme} from 'react-native-paper'
+import ProgressBar from '@root/components/ProgressBar/ProgressBar';
 import {ImageBackground, TouchableOpacity, Image} from 'react-native';
 
-const CommandsLevel5 = ({engine,passos,captured,itemPathTaked,minutes,seconds,...props}) => {
+const CommandsLevel5 = ({engine,passos,captured,itemPathTaked,number_movements,minutes,seconds,...props}) => {
 
     const { colors } = useTheme();
 
@@ -17,9 +18,16 @@ const CommandsLevel5 = ({engine,passos,captured,itemPathTaked,minutes,seconds,..
         4: colors.second_light
     })
 
+    const barconfig = props.barconfig;
+
     return (
-        <View style={{paddingVertical:16,height: 350}}>
-            <View style={{flexDirection: "row",height:350,}}>
+        <View style={{paddingVertical:16,height: 400}}>
+            <View style={{paddingHorizontal: 16}}>
+                <ProgressBar colorBar="#FF6767" progress={(4-barconfig)/4}> 
+                    {4-barconfig}/4 de vida 
+                </ProgressBar>
+            </View>
+            <View style={{flexDirection: "row",height:400}}>
                 <View style={{flex:1,
                     height:325,margin:16}}>
                     <View style={{flexDirection:"row",paddingVertical: 16}}>
@@ -27,7 +35,7 @@ const CommandsLevel5 = ({engine,passos,captured,itemPathTaked,minutes,seconds,..
                             Time:
                         </Text>
                         <Text size="small">
-                            {`${minutes}:${seconds}`}
+                            {`${("00" + minutes).slice(-2)}:${("00" + seconds).slice(-2)}`}
                         </Text>
                     </View>
                     <View style={{flexDirection:"row",paddingVertical: 16}}>
@@ -35,15 +43,7 @@ const CommandsLevel5 = ({engine,passos,captured,itemPathTaked,minutes,seconds,..
                             Comandos:
                         </Text>
                         <Text size="small">
-                            {passos}/30
-                        </Text>
-                    </View>
-                    <View style={{flexDirection:"column",paddingVertical: 16}}>
-                        <Text size="small">
-                            Rochas capturadas:
-                        </Text>
-                        <Text size="small">
-                            {captured}/10
+                            {passos}/{number_movements}
                         </Text>
                     </View>
                     
@@ -180,7 +180,7 @@ const CommandsLevel5 = ({engine,passos,captured,itemPathTaked,minutes,seconds,..
                         <Button onPress={() =>{
                             
                             engine.dispatch({type: 'take'})}}>
-                            Pegar
+                            Ativar
                         </Button>
                     </View>
                     

@@ -40,9 +40,10 @@ const CustomerPage = (props) => {
   const getData = async () => {
     try {
     
-      const teste = await AsyncStorage.getItem('@user_styles')
+      const raw_data = await AsyncStorage.getItem('@userInfo')
+      const user = JSON.parse(raw_data)
 
-      setUserInfo(JSON.parse(teste))
+      setUserInfo(user.user_styles)
       setRetrieve(true)
 
     } catch (e) {
@@ -166,7 +167,7 @@ const CustomerPage = (props) => {
     if (eyeColor !== userInfo.eyeColor || genre !== userInfo.genre || hairColor !== userInfo.hairColor ||
       head !== userInfo.head ||  skinColor !== userInfo.skinColor || armor !== userInfo.armor ||
       shoes !== userInfo.shoes){
-        const user = {
+        const user_styles = {
           eyeColor,
           genre,
           hairColor,
@@ -177,7 +178,10 @@ const CustomerPage = (props) => {
         }
 
         try {
-          await AsyncStorage.setItem('@user_styles', JSON.stringify(user))
+          const raw_data = await AsyncStorage.getItem('@userInfo')
+          let user = JSON.parse(raw_data)
+          user.user_styles = user_styles;
+          await AsyncStorage.setItem('@userInfo', JSON.stringify(user))
           
           setVisible(true)
         
