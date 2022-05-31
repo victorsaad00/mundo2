@@ -95,7 +95,7 @@ const LoginPage = (props) => {
           size="medium"
           style={{ width: "100%" }}
           onClick={() => {
-            console.log("Entrar sem logar!");
+            navigation.navigate("Home");
           }}
         >
           Entrar sem logar

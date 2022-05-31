@@ -26,6 +26,8 @@ const HomePage = (props) => {
   const { colors } = useTheme();
 
   const [retrieve, setRetrieve] = useState(false);
+  const [worldInfo,setWorldInfo] = useState([]);
+ 
   const [worldInfo, setWorldInfo] = useState([]);
 
   const navigation = useNavigation();
