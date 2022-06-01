@@ -21,6 +21,8 @@ const WorldPage = (props) => {
   const [level,setLevel] = useState(1);  
 
   const [available,setAvailable] = useState(1);
+
+  const [updateData, setUpdateData] = useState(true)
   
   const {push,route,goBack} = useNavigation();
   const OtherPageroute = useRoute();
@@ -43,6 +45,7 @@ const WorldPage = (props) => {
       let {fase} = JSON.parse(raw_data)
 
       setAvailable(fase + 1)
+      setUpdateData(false)
 
     } catch (e) {
       console.log(e);
@@ -50,10 +53,12 @@ const WorldPage = (props) => {
   }
 
   useEffect(()=>{
-    setFase()
-  })
+    if (updateData){
+      setFase()
+    }
+  },[updateData])
 
-  DeviceEventEmitter.addListener("updateData", (eventData) => setFase());
+  DeviceEventEmitter.addListener("updateData", (eventData) => setUpdateData(true));
 
  
   return (

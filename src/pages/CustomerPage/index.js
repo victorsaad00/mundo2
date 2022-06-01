@@ -22,6 +22,7 @@ import axios from "axios";
 
 
 const CustomerPage = (props) => {
+  const [name,setName] = useState("...")
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
 
@@ -46,6 +47,7 @@ const CustomerPage = (props) => {
       const raw_data = await AsyncStorage.getItem('@userInfo')
       const user = JSON.parse(raw_data)
 
+      setName(user.name)
       setUserInfo(user.user_styles)
       setAvailableItems(user.items.skins)
       setRetrieve(true)
@@ -94,7 +96,7 @@ const CustomerPage = (props) => {
 
       }))
     }
-  }, [hairColor, genre]);
+  }, [hairColor, genre,retrieve]);
 
   const [armors, setArmors] = useState([]);
 
@@ -121,7 +123,7 @@ const CustomerPage = (props) => {
 
       }))
     }
-  }, [genre]);
+  }, [genre,retrieve]);
 
   const [ListShoes, setListShoes] = useState([]);
 
@@ -216,7 +218,7 @@ const CustomerPage = (props) => {
 
       <Appbar>
         <Appbar.BackAction color="white" onPress={() => navigation.goBack()} />
-        <Appbar.Content color={colors.surface} title="Olá, Joe Doe" />
+        <Appbar.Content color={colors.surface} title={`Olá, ${name}`} />
         <Appbar.Action color={colors.surface} icon="check" onPress={saveVisual} />
       </Appbar>
 

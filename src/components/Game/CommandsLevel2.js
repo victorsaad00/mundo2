@@ -33,7 +33,7 @@ const CommandLevel2 = ({engine,passos,captured,itemPathTaked,minutes,seconds,...
                             Ferramentas capturadas:
                         </Text>
                         <Text size="small">
-                            {captured}/3
+                            {Math.floor(captured/2)}/3
                         </Text>
                     </View>
                     <View style={{paddingVertical: 16,alignItems:'center'}}>

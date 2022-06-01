@@ -122,7 +122,7 @@ const RegisterPage = (props) => {
           eyeColor: "blue",
           genre: 'male',
           hairColor: 'brown',
-          head: '2',
+          head: '1',
           skinColor: 'branca',
           armor: "1",
           shoes: "1"

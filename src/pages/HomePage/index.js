@@ -95,13 +95,13 @@ const HomePage = (props) => {
         />
         <Appbar.Action
           color={colors.surface}
-          icon="cog-outline"
-          onPress={() => navigation.push("UpdatePage")}
+          icon="cart"
+          onPress={() => navigation.push("StorePage")}
         />
         <Appbar.Action
           color={colors.surface}
-          icon="cart"
-          onPress={() => navigation.push("StorePage")}
+          icon="logout"
+          onPress={() => navigation.navigate("Login")}
         />
       </Appbar>
 
@@ -139,23 +139,6 @@ const HomePage = (props) => {
           />
         )}
 
-        {/* <Divider style={{height:100}}/> */}
-      </View>
-      <View style={{ marginBottom: 128 }}>
-        <FlatList
-          data={jsonMundos}
-          renderItem={({ item }) => {
-            return (
-              <CardMundo
-                infoCard={item}
-                onClick={() => {
-                  navigation.push("WorldPage", { mundo: item.id });
-                }}
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id}
-        />
         {/* <Divider style={{height:100}}/> */}
       </View>
     </SafeAreaView>

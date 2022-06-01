@@ -126,15 +126,15 @@ const LoginPage = (props) => {
                   }
                 }
               ))
-              await AsyncStorage.setItem("@auth", "");
             }
+            await AsyncStorage.setItem("@auth", "");
             navigation.navigate("Home");
           }}
         >
           Entrar sem logar
         </Button>
       </View>
-      <View
+      {/* <View
         style={{ paddingVertical: 16, width: "100%", alignItems: "center" }}
       >
         <Button
@@ -147,7 +147,7 @@ const LoginPage = (props) => {
         >
           Esqueceu a senha?
         </Button>
-      </View>
+      </View> */}
       <View
         style={{ paddingVertical: 16, width: "100%", alignItems: "center" }}
       >

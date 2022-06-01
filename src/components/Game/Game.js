@@ -32,6 +32,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import axios from 'axios';
+
 const initialConfigLevels = {
     1: {
         "name": "Floresta inicial",
@@ -292,8 +294,9 @@ const Level = (props) => {
                     userInfo.fase = level 
                 }
 
-                if (level === 1 && !(5 in userInfo.items.skins.armor)){
-                    userInfo.items.skins.armor.push(5)
+                if (level === 1 && !(userInfo.items.skins.armor.includes("5"))){
+                    userInfo.items.skins.armor.push("5")
+                    userInfo.items.skins.shoes.push("2")
                 }
                 
                 userInfo.experience += InfoFase[level.toString()].experience
@@ -306,6 +309,9 @@ const Level = (props) => {
                 const auth = await AsyncStorage.getItem('@auth')
                 if (auth === "Autenticado"){
                     // TO DO
+                    
+                    await axios.post("http://10.0.2.2:3000/updateUser", userInfo)
+                    
                 }
                 break;
             case "RUIM":
@@ -493,6 +499,7 @@ const Level = (props) => {
                                         setPassos(passos + 1)
                                         return;
                                     case "taked":
+                                        
                                         setCaptured(captured + 1)
                                         return;
                                     case "taked2":

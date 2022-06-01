@@ -12,7 +12,9 @@ import UpdateUserPage from "../updateUserInformation"
 
 const HomePageBottom = () => <HomePage />;
 
-const AlbumsRoute = () => <DiarioPage />;
+const DiariosPage = () => <DiarioPage />;
+
+const UserSettings = () => <UpdateUserPage />
 
 const BottomHomePage = (props) => {
   const { colors } = useTheme();
@@ -21,11 +23,13 @@ const BottomHomePage = (props) => {
   const [routes] = React.useState([
     { key: 'home', title: 'Home', icon: 'home' },
     { key: 'diario', title: 'Diário', icon: 'book' },
+    { key: 'config', title: "Configurações", icon: "cog-outline" }
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomePageBottom,
-    diario: AlbumsRoute,
+    diario: DiariosPage,
+    config: UserSettings
   });
 
   return (

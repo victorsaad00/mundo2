@@ -90,18 +90,8 @@ const DiarioPage = (props) => {
   return (
     <SafeAreaView>
       <Appbar>
+        
         <Appbar.Content color={colors.surface} title="Diário do viajante" />
-        <Appbar.Action color={colors.surface} icon="brush" onPress={()=> navigation.push("Visual")} />
-        <Appbar.Action
-          color={colors.surface}
-          icon="cog-outline"
-          onPress={() => navigation.push("UpdatePage")}
-        />
-        <Appbar.Action
-          color={colors.surface}
-          icon="cart"
-          onPress={() => navigation.push("StorePage")}
-        />
       </Appbar>
 
       <AlertDiario visible={visible} hidedialog={()=>{setVisible(false)}} infoCard={infoShow} />

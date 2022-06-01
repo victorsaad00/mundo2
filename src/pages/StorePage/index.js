@@ -15,6 +15,7 @@ import rawhairColors from "@root/assets/character/hairColors.js";
 import rawskinColors from "@root/assets/character/skinColors.js";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DefaultInfo from "@root/assets/CharacterInfo/info.json";
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -22,6 +23,7 @@ import axios from "axios";
 
 
 const StorePage = (props) => {
+  const [name, setName] = useState("...")
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
 
@@ -39,6 +41,11 @@ const StorePage = (props) => {
   const [skinColor, setSkinColor] = useState("branca");
   const [armor, setArmor] = useState("1");
   const [shoes, setShoes] = useState("1");
+
+  const [titleAlert,setTitleAlert] = useState("");
+  const [descriptionAlert,setDescriptionAlert] = useState("");
+
+  const [gold,setGold] = useState(0)
 
   const priceItems = {
     head: {
@@ -69,11 +76,12 @@ const StorePage = (props) => {
 
       const raw_data = await AsyncStorage.getItem('@userInfo')
       const user = JSON.parse(raw_data)
-      console.log(user);
-      console.log(user.items)
+
+      setName(user.name)
       setUserInfo(user.user_styles)
       setAvailableItems(user.items.skins)
-      console.log(availableItems);
+      setGold(user.items.cash)
+
       setRetrieve(true)
 
     } catch (e) {
@@ -121,14 +129,16 @@ const StorePage = (props) => {
         }
       }))
     }
-  }, [hairColor, genre]);
+  }, [hairColor, genre, retrieve]);
 
   const [armors, setArmors] = useState([]);
 
   useEffect(() => {
     if (retrieve) {
       const objectPathHair = Object.entries(pathsRequires.armor[genre]);
-      const filteredPathHair = objectPathHair.filter((item) => { return !availableItems.armor.includes(item[0]) })
+      const filteredPathHair = objectPathHair.filter((item) => {
+        return !availableItems.armor.includes(item[0])
+      })
 
       setArmors(filteredPathHair.map((item) => {
         if (item[0] === armor) {
@@ -148,7 +158,7 @@ const StorePage = (props) => {
 
       }))
     }
-  }, [genre]);
+  }, [genre, retrieve]);
 
   const [ListShoes, setListShoes] = useState([]);
 
@@ -179,11 +189,20 @@ const StorePage = (props) => {
 
   }, [genre, retrieve]);
 
-  const saveVisual = async () => {
+  useEffect(() => {
+    getTotalPrice()
+  }, [armor, head, shoes])
 
-    if (eyeColor !== userInfo.eyeColor || genre !== userInfo.genre || hairColor !== userInfo.hairColor ||
-      head !== userInfo.head || skinColor !== userInfo.skinColor || armor !== userInfo.armor ||
-      shoes !== userInfo.shoes) {
+  const getTotalPrice = () => {
+    const armorPrice = armor === userInfo.armor ? 0 : priceItems.armor[armor]
+    const headPrice = head === userInfo.head ? 0 : priceItems.head[head]
+    const shoesPrice = shoes === userInfo.shoes ? 0 : priceItems.shoes[shoes]
+    setTotalPrice(armorPrice + headPrice + shoesPrice)
+  }
+
+  const buyVisual = async () => {
+
+    if ( head !== userInfo.head || armor !== userInfo.armor || shoes !== userInfo.shoes) {
       const user_styles = {
         eyeColor,
         genre,
@@ -193,80 +212,116 @@ const StorePage = (props) => {
         armor,
         shoes
       }
-
-      try {
-        const raw_data = await AsyncStorage.getItem('@userInfo')
-        let user = JSON.parse(raw_data)
-        user.user_styles = user_styles;
-        await AsyncStorage.setItem('@userInfo', JSON.stringify(user))
-
+      // Sem saldo
+      if (totalPrice > gold){
+        setTitleAlert("Sem moedas suficiente!")
+        setDescriptionAlert("Faça mais desafios ou compre GoldCoins")
         setVisible(true)
-
-        const auth = await AsyncStorage.getItem('@auth')
-        if (auth === "Autenticado") {
-          await axios.post("http://10.0.2.2:3000/updateUser", { user_styles: user_styles, email: user.email })
+      } else{
+        try {
+          const raw_data = await AsyncStorage.getItem('@userInfo')
+          let user = JSON.parse(raw_data)
+  
+          // Não tem a cabeça
+          if ( !user.items.skins.head.includes(user_styles.head)){
+            user.items.skins.head.push(user_styles.head)
+          }
+  
+          // Não tem a armadura
+          if ( !user.items.skins.armor.includes(user_styles.armor)){
+            user.items.skins.armor.push(user_styles.armor)
+          }
+  
+          // Não tem a bota
+          if ( !user.items.skins.shoes.includes(user_styles.shoes)){
+            user.items.skins.shoes.push(user_styles.shoes)
+          }
+  
+          // desconta o valor
+          user.items.cash -= totalPrice
+  
+          await AsyncStorage.setItem('@userInfo', JSON.stringify(user))
+  
+          const auth = await AsyncStorage.getItem('@auth')
+          if (auth === "Autenticado") {
+            await axios.post("http://10.0.2.2:3000/updateUser", user)
+          }
+  
+          setTitleAlert("Compra feita com sucesso!")
+          setDescriptionAlert("Você ficará mais elegante com esses visuais viajante.")
+          setVisible(true)
+        } catch (e) {
+          console.log(e);
         }
-
-
-      } catch (e) {
-        console.log(e);
       }
+
+      
 
     }
   }
 
   const [totalPrice, setTotalPrice] = useState(0);
 
-  useEffect(() => {
-    getTotalPrice()
-  }, [armor, head, shoes])
-
-  const getTotalPrice = () => {
-    const armorPrice = armor === userInfo.armor ? 0 :  priceItems.armor[armor]
-    const headPrice =  head === userInfo.head ? 0 : priceItems.head[head]
-    const shoesPrice = shoes === userInfo.shoes ? 0 : priceItems.shoes[shoes]
-    setTotalPrice(armorPrice + headPrice + shoesPrice)
-  }
+  
 
   return (
     <SafeAreaView>
-      <Alert visible={visible} hidedialog={() => { setVisible(false) }} infoCard={{ title: "Visual atualizado!", description: "Esse visual ficou maneiro viajante!" }} />
+      <Alert visible={visible} hidedialog={() => { setVisible(false) }} infoCard={{ title: titleAlert, description: descriptionAlert }} />
 
       <Appbar>
         <Appbar.BackAction color="white" onPress={() => navigation.goBack()} />
-        <Appbar.Content color={colors.surface} title="Olá, Joe Doe" />
+        <Appbar.Content color={colors.surface} title={`Olá, ${name}`} />
+        <Button size="small" mode='primary' onPress={
+            () => {
+              setArmor(userInfo.armor)
+              setHead(userInfo.head)
+              setShoes(userInfo.shoes)
+            }
+          }>Reset Visual
+          </Button>
         {/* <Appbar.Action color={colors.surface} icon="check" onPress={saveVisual} /> */}
       </Appbar>
 
       <View style={{ marginBottom: 128, alignItems: 'center' }}>
-        <View style={{ backgroundColor: 'white', width: 192, height: 350 }}>
-          <Image style={{ width: 192, resizeMode: 'stretch', height: 408 }}
-            source={pathsRequires.skin[genre][skinColor]}
-          />
-          <Image style={{ width: 192, resizeMode: 'stretch', height: 12, position: "absolute", left: 0, top: 126 }}
-            source={pathsRequires.eye[eyeColor]}
-          />
-          <Image style={{ width: 192, resizeMode: 'stretch', height: 408, position: "absolute" }}
-            source={pathsRequires.armor[genre][armor]}
-          />
-          <Image style={{ width: 192, resizeMode: 'stretch', height: 186, position: "absolute" }}
-            source={pathsRequires.hair[genre][hairColor][head]}
-          />
-          <Image style={{ width: 192, resizeMode: 'stretch', height: 408, position: "absolute" }}
-            source={pathsRequires.shoes[shoes].visual}
-          />
+        <View style={{alignItems:'center'}}>
+          <View style={{ backgroundColor: 'white', width: 192, height: 350 }}>
+            
+            <Image style={{ width: 192, resizeMode: 'stretch', height: 408 }}
+              source={pathsRequires.skin[genre][skinColor]}
+            />
+            <Image style={{ width: 192, resizeMode: 'stretch', height: 12, position: "absolute", left: 0, top: 126 }}
+              source={pathsRequires.eye[eyeColor]}
+            />
+            <Image style={{ width: 192, resizeMode: 'stretch', height: 408, position: "absolute" }}
+              source={pathsRequires.armor[genre][armor]}
+            />
+            <Image style={{ width: 192, resizeMode: 'stretch', height: 186, position: "absolute" }}
+              source={pathsRequires.hair[genre][hairColor][head]}
+            />
+            <Image style={{ width: 192, resizeMode: 'stretch', height: 408, position: "absolute" }}
+              source={pathsRequires.shoes[shoes].visual}
+            />
 
+          </View>
+          <View style={{position:"absolute",right:0,flexDirection:'row',paddingVertical:8,alignItems:'center'}}>
+            <Icon name="coins" size={20} color={"orange"} style={{opacity:0.75,paddingHorizontal:8}} />
+            <Text size="small">
+              {gold} moedas disponíveis
+            </Text>
+          </View>
         </View>
-        <Text>{totalPrice}</Text>
-        <View style={{ height: 300 }}>
+        <Text style={{ position: 'absolute', top: 315, paddingVertical: 4 }}>{totalPrice} moedas</Text>
+
+        <View style={{ height: 350 }}>
           <View style={{alignItems:'center',paddingVertical:8}}>
-            <Button size="small" onPress={
+            <Button size="small" mode='primary' onPress={
               () => {
-                setArmor(userInfo.armor)
-                setHead(userInfo.head)
-                setShoes(userInfo.shoes)
+                if (totalPrice > 0){
+                  buyVisual()
+                }
               }
-            }>Reset Visual</Button>
+            }>Comprar
+            </Button>
           </View>
           <View style={{
             backgroundColor: colors.primary, height: 60, justifyContent: "center",
