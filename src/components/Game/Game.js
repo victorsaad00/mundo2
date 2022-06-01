@@ -36,7 +36,7 @@ const initialConfigLevels = {
     1: {
         "name": "Floresta inicial",
         "minutes": 1,
-        "seconds": 0,
+        "seconds": 30,
         "passos": 100,
         'numberToCapture': 3
     },

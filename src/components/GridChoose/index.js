@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Text from "../../Themes/Components/Text/Text";
 
 
-const VisualChoose = ({size,...props}) => {
+const GridChoose = ({size,...props}) => {
     const {  colors,colorchoose } = useTheme();
 
     const [visuais,setVisuais] = React.useState([]);
@@ -60,6 +60,7 @@ const VisualChoose = ({size,...props}) => {
                 data={visuais}
                 style={{height:50,flexGrow: 0}}
                 renderItem={ItemColor}
+                numColumns={3}
                 horizontal
                 keyExtractor={item => item.id}
             />
@@ -68,4 +69,4 @@ const VisualChoose = ({size,...props}) => {
     );
 };
 
-export default VisualChoose;
+export default GridChoose;

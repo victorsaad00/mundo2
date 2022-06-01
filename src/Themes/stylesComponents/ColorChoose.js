@@ -7,7 +7,7 @@ const colorChoose = StyleSheet.create({
         paddingHorizontal:16,
         marginHorizontal:16,
         height:80,
-        justifyContent: "center",
+        justifyContent: "space-between",
         alignItems: 'center',
         opacity: 0.45,
         borderRadius: 20,

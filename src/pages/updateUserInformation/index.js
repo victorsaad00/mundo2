@@ -25,7 +25,6 @@ const UpdateUserInformation = () => {
   const { colors } = useTheme();
 
   const [visible, setVisible] = useState(false);
-  const hideDialog = () => {setVisible(false)};
 
   const [titleAlert,setTitleAlert] = useState("");
   const [descriptionAlert,setDescriptionAlert] = useState("");
@@ -66,15 +65,12 @@ const UpdateUserInformation = () => {
       await AsyncStorage.setItem('@userInfo', JSON.stringify(authUser))
 
 
-      axios.post("http://10.0.2.2:3000/updateUser", user).then(response=>{
-        console.log("Nome atualizado")
+      await axios.post("http://10.0.2.2:3000/updateUser", user)
 
-        setTitleAlert("Nome atualizado!")
-        setDescriptionAlert("Seu nome foi atualizado com sucesso")
+      setTitleAlert("Nome atualizado!")
+      setDescriptionAlert("Seu nome foi atualizado com sucesso")
 
-        setVisible(true);
-
-      });
+      setVisible(true);
 
       //console.log(response.data);
       setEmptyField();
@@ -88,7 +84,7 @@ const UpdateUserInformation = () => {
     try {
       let user = {};
 
-      if (password !== confirmPassword) {
+      if (password !== confirmPassword || password === "") {
         setIncorrectPassword(true);
         return;
       }
@@ -101,12 +97,12 @@ const UpdateUserInformation = () => {
         password: password,
       };
 
-      axios.post("http://10.0.2.2:3000/updateUser", user).then(response=>{
-        console.log("Senha atualizada")
+      await axios.post("http://10.0.2.2:3000/updateUser", user)
 
-        // setVisible(true);
-      });
+      setTitleAlert("Senha atualizada!")
+      setDescriptionAlert("Sua senha foi atualizada com sucesso!")
 
+      setVisible(true);
 
       //console.log(response.data);
       setEmptyField();
@@ -121,7 +117,7 @@ const UpdateUserInformation = () => {
         <Appbar.BackAction color="white" onPress={()=> navigation.goBack()} />
         <Appbar.Content color={colors.surface} title="Alterar informações" />
       </Appbar>
-      <Alert infoCard={{title:titleAlert,description:descriptionAlert}} visible={visible} hideDialog={hideDialog} />
+      <Alert visible={visible} hidedialog={()=>{setVisible(false)}} infoCard={{title:titleAlert,description:descriptionAlert}}/>
       <View
         justifyContent="space-around"
         alignItems="center"
