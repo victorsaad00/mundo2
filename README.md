@@ -5,7 +5,7 @@
 
 ## Como inicializar o projeto
 
-Antes de tudo é necessário você ter o projeto do back-end em sua máquina. Ele está disponível aqui:
+Antes de tudo é necessário você ter o projeto do back-end em sua máquina. Ele está disponível aqui: https://github.com/victorsaad00/mundo2-backend/tree/main
 
 - Com projeto em sua máquina execute no terminal`npm install`.
 - Execute um emulador android
