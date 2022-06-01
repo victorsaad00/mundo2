@@ -11,16 +11,13 @@ import {
 } from "react-native-paper";
 import {FlatList, ActivityIndicator,RefreshControl } from 'react-native'
 
-
-import Input from "../../Themes/Components/Input/Input";
-import Button from "../../Themes/Components/Button/Button";
-import Text from "../../Themes/Components/Text/Text";
 import { View } from "../../components/Themed";
-import Alert from "../../components/Alert";
+
 
 import CardMundo from "../../components/CardMundo/CardMundo";
 import jsonMundos from "../../assets/CardMundo/CardMundo.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AlertDiario from "../../components/AlertDiario";
 
 import { useNavigation } from "@react-navigation/native";
 
@@ -32,6 +29,8 @@ const HomePage = (props) => {
   const [worldInfo,setWorldInfo] = useState([]);
 
   const [name,setName] = useState("")
+
+  const [visible,setVisible] = useState(false);
  
 
   const navigation = useNavigation();
@@ -43,6 +42,13 @@ const HomePage = (props) => {
 
       const raw_data = await AsyncStorage.getItem('@userInfo')
       let {name, world,fase} = JSON.parse(raw_data)
+
+      const firstTime = await AsyncStorage.getItem('@firstTime')
+
+      if (firstTime=== "yes"){
+        setVisible(true);
+        await AsyncStorage.setItem("@firstTime", "no");
+      }
 
       setName(name)
       setWorldInfo(jsonMundos.map(item => {
@@ -104,6 +110,10 @@ const HomePage = (props) => {
           onPress={() => navigation.navigate("Login")}
         />
       </Appbar>
+      <AlertDiario visible={visible} hidedialog={()=>{setVisible(false)}} infoCard={{
+                "title": "Bem-vindo viajante",
+                "description": "Olá viajante, creio que você está apto a ajudar o nosso mundo das mãos do T-CHAKI. Antes de mais nada, gostaria de me apresentar, meu nome é Fisher. Antigamente costumava viver por um vilarejo por perto, vivendo da pesca.\nPorém depois daquele dia…\nDeixe para lá, isso não é importante.\nOlho para você e considero uma pessoa muito inteligente e apta para superar as dificuldades que podemos encontrar no caminho. \nNossa ilha foi dominada por um dos subordinados do T-CHAKI, o pirata Mow. Toda a ilha está dominada com seus capangas, preciso de sua ajuda para libertá-la. Pronto para se tornar um herói, viajante?\n"
+              }} />
 
       <View style={{ marginBottom: 128 }}>
         {worldInfo.length === 0 ? (

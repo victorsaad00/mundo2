@@ -99,7 +99,7 @@ const LoginPage = (props) => {
           onClick={async () => {
             let userInfo = await AsyncStorage.getItem('@userInfo')
             // Primeria vez
-            if (userInfo === null){
+            if (userInfo === null) {
               await AsyncStorage.setItem('@userInfo', JSON.stringify(
                 { // Fazer visuais padroes
                   name: "Viajante",
@@ -107,7 +107,7 @@ const LoginPage = (props) => {
                   world: 1,
                   experience: 0,
                   items: {
-                    skins:{
+                    skins: {
                       head: ["1"],
                       armor: ["1"],
                       shoes: ["1"],
@@ -115,7 +115,7 @@ const LoginPage = (props) => {
                     },
                     cash: 0
                   },
-                  user_styles:{
+                  user_styles: {
                     eyeColor: "blue",
                     genre: 'male',
                     hairColor: 'brown',
@@ -125,7 +125,9 @@ const LoginPage = (props) => {
                     shoes: "1"
                   }
                 }
-              ))
+              )
+              )
+              await AsyncStorage.setItem("@firstTime", "yes");
             }
             await AsyncStorage.setItem("@auth", "");
             navigation.navigate("Home");

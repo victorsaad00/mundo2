@@ -19,7 +19,7 @@ const AlertDiario = ({size,...props}) => {
             {title}
         </Dialog.Title>
         <Dialog.ScrollArea  >
-            <ScrollView contentContainerStyle={{width: "100%",height: "100%"}}>
+            <ScrollView contentContainerStyle={{width: "100%",height: 710}}>
                 <Dialog.Content>
                     <Text variant="flat" style={[alert.descriptionDiarioStyle]}>{description}</Text>
                 </Dialog.Content>

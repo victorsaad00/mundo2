@@ -303,7 +303,7 @@ const StorePage = (props) => {
             />
 
           </View>
-          <View style={{position:"absolute",right:0,flexDirection:'row',paddingVertical:8,alignItems:'center'}}>
+          <View style={{position:"absolute",flexDirection:'row',width:"100%",paddingVertical:8,justifyContent:"flex-start"}}>
             <Icon name="coins" size={20} color={"orange"} style={{opacity:0.75,paddingHorizontal:8}} />
             <Text size="small">
               {gold} moedas disponíveis

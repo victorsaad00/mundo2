@@ -2,14 +2,11 @@ import React, {useEffect,useState,useCallback} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Appbar, TextInput, useTheme, Divider, BottomNavigation, List } from "react-native-paper";
 import {FlatList, ScrollView, ActivityIndicator,RefreshControl } from 'react-native'
-import Input from "../../Themes/Components/Input/Input";
-import Button from "../../Themes/Components/Button/Button";
-import Text from "../../Themes/Components/Text/Text";
 import { View } from "../../components/Themed";
 import AlertDiario from "../../components/AlertDiario";
 
-import { NavigationContainer,useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import infoMundo from "@root/assets/Diario/Mundo_1/info.json";

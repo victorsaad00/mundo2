@@ -6,6 +6,7 @@ import Button from "../../Themes/Components/Button/Button";
 import { View } from "../../components/Themed";
 import Alert from "../../components/Alert";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import axios from "axios";
 
@@ -23,26 +24,17 @@ const RegisterPage = (props) => {
 
   const showDialog = () => setVisible(true);
 
-  const levelcard = {
-    mapName: "Entrada da doca",
+
+  const userAlertInfo = {
+    title: "Usuário cadastrado",
     description:
-      "\t\t\t\t\t\t\t\tCom estas amostras que você coletou finalmente poderemos criar o Defender. Não seria justo se eu não premiasse com um pouco que eu tenho, você coletou grandes amostras.",
-    experience: "8 xp",
-    reward: "5 moedas",
-    lock: [
-      "Desbloqueado diário do viajante dia 9.",
-      "Desbloqueado missão “Liberte a ilha”.",
-      "Criado o dispositivo Defender.",
-    ],
+      "Usuário criado com sucesso",
   };
 
-  const alertCard = {
-    title: "Visual alterado",
-    description:
-      "\t\t\t\t\tTenho que concordar que esse visual está melhor que o anterior.",
+  const hideDialog = () => {
+    setVisible(false)
+    navigation.goBack()
   };
-
-  const hideDialog = () => setVisible(false);
 
   const setEmptyField = () => {
     setEmail("");
@@ -58,25 +50,6 @@ const RegisterPage = (props) => {
         email: "",
         password: "",
         usedItems: undefined,
-      };
-
-      const usedItems = {
-        head: "1",
-        armor: "1",
-        eyeColor: "brown",
-        feet: "1",
-        hairColor: "brown",
-        skinColor: "brown",
-      };
-
-      const items = {
-        skins:{
-          head: ["1"],
-          armor: ["1"],
-          shoes: ["1"],
-          weapon: [],
-        },
-        cash: 0
       };
 
       console.log(email);
@@ -101,6 +74,8 @@ const RegisterPage = (props) => {
 
         return;
       }
+
+      await AsyncStorage.setItem("@firstTime", "yes");
 
       user = {
         name: name,
@@ -128,15 +103,13 @@ const RegisterPage = (props) => {
           shoes: "1"
         }
       };
-      //return user;
-      //sendUser(user);
-      //console.log(user);
+      
       const response = await axios.post("http://10.0.2.2:3000/register", user);
 
-      console.log(response.data);
       setEmptyField();
-      navigation.goBack()
+      setVisible(true)
     } catch (error) {
+      console.log(error)
       console.log(error.response);
     }
   };
@@ -191,7 +164,7 @@ const RegisterPage = (props) => {
         />
         <Button onClick={register}>Registrar-se</Button>
 
-        <Alert infoCard={alertCard} hidedialog={hideDialog} visible={visible} />
+        <Alert infoCard={userAlertInfo} hidedialog={hideDialog} visible={visible} />
       </View>
     </SafeAreaView>
   );
